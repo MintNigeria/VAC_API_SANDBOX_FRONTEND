@@ -1,0 +1,110 @@
+<div class="grid md:grid-cols-2 px-6 md:px-0 w-full bg-white overflow-hidden">
+  <div class="flex justify-center items-center md:max-w-sm md:mx-auto">
+    <div class="mx-auto">
+      <div class="w-full py-6">
+        <div>
+          <img
+            class="cursor-pointer"
+            src="assets/images/Sandboxlogo.png"
+            alt="Sandbox"
+            routerLink="/"
+          />
+        </div>
+      </div>
+      <div class="mb-12">
+        <div>
+          <h2 class="mb-3 text-[#101828] font-semibold leading-10 text-3xl">
+            Log in
+          </h2>
+          <p class="mb-8 text-base text-[#667085]">
+            Welcome back! Please log in to your Sandbox account to start testing
+            your API integrations.
+          </p>
+        </div>
+      </div>
+      <form [formGroup]="loginAuth">
+        <div class="mb-4">
+          <div class="text-base text-[#6E7A91] mb-2">
+            <label for="identifier">Your Profile Identifier</label>
+          </div>
+          <div class="relative w-full mt-2">
+            <app-app-text-input
+              [class]="
+                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+              "
+              [placeholder]="'Enter your identifier'"
+              [control]="$any(loginAuth.get('identifier'))"
+              [errorMessage]="'identifier is Required'"
+              [required]="true"
+            >
+            </app-app-text-input>
+
+            <img
+              *ngIf="loginAuth.value.identifier?.length"
+              class="w-4 h-4 cursor-pointer absolute right-5 top-1/2 translate-y-[-50%]"
+              src="assets/images/minus.svg"
+              [ngClass]="{ 'top-[38%]': loginAuth.get('identifier')?.invalid }"
+              alt="clear-image"
+              (click)="clearInput('identifier')"
+            />
+          </div>
+          <div class="form-group mt-8 mb-3">
+            <div class="text-base text-[#6E7A91] mb-2">
+              <label for="">Password</label>
+            </div>
+            <div class="relative w-full mt-2">
+              <app-app-password-input
+                [class]="
+                  ' placeholder:text-[#667085] text-black block h-14 pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px]  w-full'
+                "
+                [placeholder]="'Enter password'"
+                [control]="$any(loginAuth.get('password'))"
+                [errorMessage]="loginAuth.get('password')?.errors?.['minlength']? 'New password must not be more than 4 numbers' : 'Password is Required'"
+                [required]="true"
+              >
+              </app-app-password-input>
+            </div>
+          </div>
+          <div
+            class="text-[#1368EC] text-sm cursor-pointer"
+            routerLink="/forgot-password"
+          >
+            Forgot password
+          </div>
+        </div>
+        <div class="mb-6 mt-6">
+          <app-app-button
+            [overRideButtonClass]="true"
+            [disabled]="loginAuth.invalid || status === 'LOADING'"
+            [status]="status"
+            (buttonClick)="loginAdmin()"
+            [customClass]="
+              'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize flex justify-center w-full py-3 rounded-xl px-6 text-center md:text-base text-white'
+            "
+            [buttonText]="'Continue'"
+          ></app-app-button>
+        </div>
+        <p class="text-[#667085] text-sm mb-8">
+          Don’t have an account?
+          <span
+            class="text-[#1368EC] cursor-pointer font-medium"
+            routerLink="/sign-up"
+            >Sign Up</span
+          >
+        </p>
+        <p class="text-[#667085] text-sm">
+          By logging in, you agree to our Terms and Conditions and Privacy
+          Policy.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <div class="hidden md:block">
+    <img
+      src="assets/images/login.svg"
+      class="h-screen object-cover w-full"
+      alt="login-image"
+    />
+  </div>
+</div>
