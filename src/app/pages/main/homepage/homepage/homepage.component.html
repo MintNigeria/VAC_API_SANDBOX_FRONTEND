@@ -1,0 +1,23 @@
+<div class="layout">
+  <aside>
+    <app-app-sidebar
+      [routes]="[
+        {
+          routeName: 'Integrate VAC System’s API',
+          routePath: '/main',
+          exact: true
+        },
+        {
+          routeName: 'VAC system Integrates partners’ API',
+          routePath: '/main/partner-API'
+        },
+      ]"
+    >
+    </app-app-sidebar>
+  </aside>
+  <main>
+    <div class="max-w-screen-xl mx-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

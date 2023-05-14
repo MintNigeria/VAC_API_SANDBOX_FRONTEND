@@ -1,15 +1,66 @@
-<div class="flex items-center justify-end py-4 px-8 w-full">
-    <div class="flex justify-end">
-      <div class="flex items-center gap-6 cursor-pointer">
-        <div
-          class="w-12 h-12 text-sm flex items-center justify-center bg-[#0039A6] rounded-full text-white"
-        >
-        Adekunle ibrahim
+<div class="flex justify-between items-center w-full py-4 bg-[#1368EC] px-24">
+  <img src="assets/images/mintlogo.png" alt="mint-sandbox-logo" />
+  <div>
+    <ul class="flex gap-8 text-[#EBF3FF]">
+      <li
+        [ngClass]="activeLink.isActive ? '' : ''"
+        routerLink="/main"
+        routerLinkActive
+        #activeLink="routerLinkActive"
+      >
+        Home
+      </li>
+      <li
+        [ngClass]="activeLink.isActive ? '' : ''"
+        routerLink="/main/test-enviroment"
+        routerLinkActive
+        #activeLink="routerLinkActive"
+      >
+        Test Environment
+      </li>
+      <li
+        [ngClass]="activeLink.isActive ? '' : ''"
+        routerLink="/main/support"
+        routerLinkActive
+        #activeLink="routerLinkActive"
+      >
+        Supports
+      </li>
+    </ul>
+  </div>
+  <div class="">
+    <div class="dropdown dropdown-end">
+      <label
+        (click)="showAccount = false"
+        tabindex="0"
+        class="btn m-2 bg-white outline-0 hover:bg-white border border-solid flex items-center gap-4 border-[#EFF2F6] hover:border-[#EFF2F6] text-[#344054]"
+      >
+        <p class="capitalize">Account</p>
+        <img src="assets/images/arrow-down.png" alt="arrow-down" />
+      </label>
+
+      <div
+        tabindex="0"
+        class="dropdown-content menu p-2 shadow bg-white rounded-box w-60"
+        [ngClass]="showAccount ? 'hidden' : 'block'"
+      >
+        <div class="p-4">
+          <div
+            class="flex gap-6 items-center mb-4 pb-2 border-b border-[#F2F4F7]"
+          >
+            <img src="assets/images/avatar.png" alt="account-image" />
+            <div>
+              <p class="text-[#344054] text-sm font-medium">Adekunle Ibrahim</p>
+              <p class="text-[#667085] text-sm">ade@unilag.edu.ng</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 cursor-pointer">
+            <img src="assets/images/logout.png" alt="logout-icon" />
+            <p class="text-[#344054] text-sm font-normal">Log out</p>
+          </div>
         </div>
-        <p class="text-[#4B5466] text-sm font-medium">
-         Adekunle
-        </p>
       </div>
     </div>
   </div>
-  
+</div>
+<div class="bg-white h-10 border border-solid border-[#d9dfe9]"></div>

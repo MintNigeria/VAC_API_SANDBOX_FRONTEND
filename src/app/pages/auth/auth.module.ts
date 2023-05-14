@@ -36,7 +36,7 @@ import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/
     AppPasswordInputComponent,
     AppNumberInputComponent,
     EmailSentComponent,
-    SignUpEmailComponent
+    SignUpEmailComponent,
   ]
 })
 export class AuthModule { }

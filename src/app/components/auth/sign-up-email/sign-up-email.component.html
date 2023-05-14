@@ -1,17 +1,17 @@
-<div class="">
-    <div
-  class="w-full sticky top-0 px-16 py-6 flex justify-between items-center border border-solid border-t-0 border-l-0 border-r-0"
->
-  <div>
-    <img
-      class="cursor-pointer"
-      src="assets/images/Sandboxlogo.png"
-      alt="Sandbox"
-      routerLink="/"
-    />
+<div class="relative h-screen">
+  <div
+    class="w-full sticky top-0 px-16 py-6 flex justify-between items-center border border-solid border-t-0 border-l-0 border-r-0"
+  >
+    <div>
+      <img
+        class="cursor-pointer"
+        src="assets/images/Sandboxlogo.png"
+        alt="Sandbox"
+        routerLink="/"
+      />
+    </div>
   </div>
-</div>
-<div class="px-6">
+  <div class="px-6 mb-32 translate-y-1/4">
     <div>
       <div class="max-w-md mx-auto">
         <div>
@@ -25,15 +25,37 @@
           <div
             class="text-center text-[#1059C6] text-[2.2rem] font-extrabold mb-6"
           >
-          Check your email 
-
+            Check your email
           </div>
-          <p class="text-center text-[#475467] ">
-            You have successfully signed up for our Sandbox application. We sent a verification link to
-           <span class="text-[#475467]">({{ email }})</span>
+          <p class="text-center text-[#475467]">
+            You have successfully signed up for our Sandbox application. We sent
+            a verification link to
+            <span class="text-[#475467]">({{ email }})</span>
           </p>
         </div>
       </div>
     </div>
+  </div>
+  <div class="bg-[#F9FAFB] p-8 mx-auto w-2/4">
+    <p class="font-semibold mb-3">
+      To get started, simply check your email for verification link, log in to
+      your account and begin testing your API integrations in our secure Sandbox
+      environment.
+    </p>
+    <p>
+      We're excited to have you on board, and we can't wait to see what you
+      create with our Sandbox. If you have any questions or feedback, please
+      don't hesitate to contact our support team at
+      <span class="text-[#1059C6] underline underline-[#1059C6]">support@vac-sandbox.com.</span>
+    </p>
+  </div>
+  <!-- footer -->
+  <div class="flex md:justify-between w-full px-16 py-6 items-center bg-[#1D2939] absolute bottom-0">
+    <img src="assets/images/logo.png" alt="">
+    <div class="text-[#EAECF0] flex gap-5">
+        <p>Help</p>
+        <p>Privacy</p>
+    </div>
+    <p class="text-[#98A2B3]">© VAC Solutions 2023</p>
   </div>
 </div>
