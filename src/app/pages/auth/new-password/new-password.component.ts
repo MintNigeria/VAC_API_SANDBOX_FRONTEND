@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Status } from 'src/app/types/shared.types';
 
 @Component({
   selector: 'app-new-password',
   templateUrl: './new-password.component.html',
-  styleUrls: ['./new-password.component.scss']
+  styleUrls: ['./new-password.component.scss'],
 })
 export class NewPasswordComponent implements OnInit {
   password!: FormGroup;
@@ -15,10 +21,9 @@ export class NewPasswordComponent implements OnInit {
     this.password.addValidators(
       this.validatePassword(this.newPasswordGroup, this.newConfirmPasswordGroup)
     );
-   }
-
-  ngOnInit(): void {
   }
+
+  ngOnInit(): void {}
   initForgotForm() {
     this.password = new FormGroup({
       newPassword: new FormControl('', [
@@ -39,10 +44,8 @@ export class NewPasswordComponent implements OnInit {
     return this.password?.get('confirmPassword') as FormGroup;
   }
 
-  resetPassword(){
+  resetPassword() {}
 
-  }
-  
   validatePassword(
     password: AbstractControl,
     confirmPassword: AbstractControl

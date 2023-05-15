@@ -14,6 +14,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/app-text-input.component';
 import { AppButtonComponent } from 'src/app/shared/components/app-button/app-button.component';
 import { AppSelectComponent } from 'src/app/shared/components/app-select/app-select.component';
+import { SystemRequestParameterComponent } from './test-enviroment/system-request-parameter/system-request-parameter.component';
+import { ResponseParameterComponent } from './test-enviroment/response-parameter/response-parameter.component';
+import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 
 
 @NgModule({
@@ -24,6 +27,8 @@ import { AppSelectComponent } from 'src/app/shared/components/app-select/app-sel
     HomepageComponent,
     TestPartnerAPIComponent,
     TestSystemAPIComponent,
+    SystemRequestParameterComponent,
+    ResponseParameterComponent,
   ],
   imports: [
     CommonModule,
@@ -33,7 +38,8 @@ import { AppSelectComponent } from 'src/app/shared/components/app-select/app-sel
     ReactiveFormsModule,
     AppTextInputComponent,
     AppSelectComponent,
-    AppButtonComponent
+    AppButtonComponent,
+    ConfirmSuccessModalComponent
   ]
 })
 export class MainModule { }

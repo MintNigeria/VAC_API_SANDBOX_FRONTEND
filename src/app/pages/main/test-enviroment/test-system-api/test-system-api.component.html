@@ -1,1 +1,62 @@
-<p>test-system-api works!</p>
+<div class="border-b-2 mb-3">
+  <h3 class="text-2xl font-semibold text-[#101828] mb-2">
+    VAC system integrates Partner’s API
+  </h3>
+  <p class="text-[#475467] mb-4">
+    Connect with VAC API and test in your environment for result.
+  </p>
+</div>
+
+<form class="mt-4 grid gap-4 md:grid-cols-[1fr_auto]" [formGroup]="apiUrl">
+  <div class="grid grid-cols-[auto_1fr]">
+    <label
+      class="text-base font-semibold text-[#101828] bg-white px-[14px] py-[10px] rounded-l-lg border border-solid border-[#D0D5DD]"
+      for="partner api endpoint"
+      >VAC System API Endpoint</label
+    >
+    <input
+      [class]="
+        ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-solid border-l-0 border-[#D0D5DD] outline-0 rounded-r-[8px] py-3'
+      "
+      [placeholder]="'Enter partner api endpoint'"
+      [formControl]="$any(apiUrl.get('partnerApiEndpoint'))"
+    />
+  </div>
+  <app-app-button
+    [overRideButtonClass]="true"
+    [disabled]="apiUrl.invalid || status === 'LOADING'"
+    [status]="status"
+    (buttonClick)="partnerApi()"
+    [customClass]="
+      'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+    "
+    [buttonText]="'Copy API'"
+  ></app-app-button>
+</form>
+
+<div class="border-b-2 mb-3 mt-8">
+  <h3 class="text-lg font-semibold text-[#101828]">API Test Results</h3>
+  <p class="text-[#475467] mb-4">
+    The tested API results will be displayed below:
+  </p>
+</div>
+<div class="flex items-center mb-4 gap-6">
+  <p
+    class=""
+    routerLink="/test-enviroment/test-system-API/system-request-parameter"
+    routerLinkActive
+    #activeLink="routerLinkActive"
+    [ngClass]="activeLink.isActive ? 'active' : 'text-[#667085] font-medium'"
+  >
+    VAC System Request Parameters
+  </p>
+  <p
+    routerLink="/test-enviroment/test-system-API/response-parameter"
+    routerLinkActive
+    #activeLink1="routerLinkActive"
+    [ngClass]="activeLink1.isActive ? 'active' : 'text-[#667085] font-medium'"
+  >
+    API Response Parameter
+  </p>
+</div>
+<router-outlet></router-outlet>

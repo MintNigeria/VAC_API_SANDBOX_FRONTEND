@@ -4,14 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SystemSampleApiComponent } from './components/main/homepage/system-sample-api/system-sample-api.component';
-import { PartnerSampleApiComponent } from './components/main/homepage/partner-sample-api/partner-sample-api.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SystemSampleApiComponent,
-    PartnerSampleApiComponent
   ],
   imports: [
     BrowserModule,

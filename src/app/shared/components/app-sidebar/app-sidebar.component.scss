@@ -1,0 +1,16 @@
+.active-link {
+  @apply bg-[#F5F9FF] relative;
+  p {
+    @apply text-[#1368EC];
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    background-color: #1368EC;
+    width: 2px;
+    height: 100%;
+    top: 0;
+  }
+}

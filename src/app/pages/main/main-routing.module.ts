@@ -8,6 +8,8 @@ import { SystemAPIComponent } from './homepage/system-api/system-api.component';
 import { PartnerAPIComponent } from './homepage/partner-api/partner-api.component';
 import { TestSystemAPIComponent } from './test-enviroment/test-system-api/test-system-api.component';
 import { TestPartnerAPIComponent } from './test-enviroment/test-partner-api/test-partner-api.component';
+import { SystemRequestParameterComponent } from './test-enviroment/system-request-parameter/system-request-parameter.component';
+import { ResponseParameterComponent } from './test-enviroment/response-parameter/response-parameter.component';
 
 const routes: Routes = [
   {
@@ -26,7 +28,21 @@ const routes: Routes = [
         path: 'test-enviroment',
         component: TestEnviromentComponent,
         children: [
-          { path: 'test-system-API', component: TestSystemAPIComponent },
+          { path: '', pathMatch: 'full', redirectTo: 'test-system-API' },
+          {
+            path: 'test-system-API',
+            component: TestSystemAPIComponent,
+            children: [
+              {
+                path: 'system-request-parameter',
+                component: SystemRequestParameterComponent,
+              },
+              {
+                path: 'response-parameter',
+                component: ResponseParameterComponent,
+              },
+            ],
+          },
           { path: 'test-partner-API', component: TestPartnerAPIComponent },
         ],
       },

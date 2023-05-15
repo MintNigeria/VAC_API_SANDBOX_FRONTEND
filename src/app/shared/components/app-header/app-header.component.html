@@ -1,28 +1,38 @@
 <div class="flex justify-between items-center w-full py-4 bg-[#1368EC] px-24">
   <img src="assets/images/mintlogo.png" alt="mint-sandbox-logo" />
   <div>
-    <ul class="flex gap-8 text-[#EBF3FF]">
+    <ul class="flex gap-8 items-center text-[#EBF3FF]">
       <li
-        [ngClass]="activeLink.isActive ? '' : ''"
-        routerLink="/main"
+        class="cursor-pointer"
+        [ngClass]="
+          activeLink.isActive ? 'bg-[#4086ef] py-2 px-3 rounded-lg' : ''
+        "
+        routerLink="/"
         routerLinkActive
+        [routerLinkActiveOptions]="{ exact: true }"
         #activeLink="routerLinkActive"
       >
         Home
       </li>
       <li
-        [ngClass]="activeLink.isActive ? '' : ''"
-        routerLink="/main/test-enviroment"
+        class="cursor-pointer"
+        [ngClass]="
+          activeLink2.isActive ? 'bg-[#4086ef] py-2 px-3 rounded-lg' : ''
+        "
+        routerLink="/test-enviroment"
         routerLinkActive
-        #activeLink="routerLinkActive"
+        #activeLink2="routerLinkActive"
       >
         Test Environment
       </li>
       <li
-        [ngClass]="activeLink.isActive ? '' : ''"
-        routerLink="/main/support"
+        class="cursor-pointer"
+        [ngClass]="
+          activeLink3.isActive ? 'bg-[#4086ef] py-2 px-3 rounded-lg' : ''
+        "
+        routerLink="/support"
         routerLinkActive
-        #activeLink="routerLinkActive"
+        #activeLink3="routerLinkActive"
       >
         Supports
       </li>
@@ -54,7 +64,10 @@
               <p class="text-[#667085] text-sm">ade@unilag.edu.ng</p>
             </div>
           </div>
-          <div class="flex items-center gap-4 cursor-pointer">
+          <div
+            class="flex items-center gap-4 cursor-pointer"
+            (click)="logOut()"
+          >
             <img src="assets/images/logout.png" alt="logout-icon" />
             <p class="text-[#344054] text-sm font-normal">Log out</p>
           </div>
