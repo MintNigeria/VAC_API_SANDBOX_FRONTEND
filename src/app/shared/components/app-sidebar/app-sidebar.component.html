@@ -1,36 +1,23 @@
-<div class="px-2 bg-white">
-    <div class="py-12">
-      <div
-        *ngFor="let route of routes"
-        class="flex gap-3 rounded-xl group items-center hover:bg-[#EFF2F6] px-4 py-3 w-full mb-1"
-        [routerLink]="route.permission ? route?.routePath : null"
-        routerLinkActive
-        #activeLink="routerLinkActive"
-        [routerLinkActiveOptions]="{ exact: route.exact || false }"
-        [attr.disabled]="route.permission"
-        [ngClass]="{
-          'bg-[#EFF2F6]': activeLink.isActive,
-          'bg-[white]': !activeLink.isActive,
-          'cursor-pointer': route.permission,
-          'cursor-not-allowed': !route.permission
-        }"
+<div class="px-2 bg-white ml-32 flex justify-center items-center">
+  <div class="py-12">
+    <div class="border-b border-b-[#EAECF0] w-fit mb-4 text-center px-4">
+      <p class="py-3 text-[#101828] font-medium">Partners Data Migration</p>
+    </div>
+    <div
+      *ngFor="let route of routes"
+      class="flex gap-3 rounded-xl group items-center cursor-pointer px-4 py-3 w-full mb-1"
+      [routerLink]="route.routePath"
+      routerLinkActive
+      #activeLink="routerLinkActive"
+      [routerLinkActiveOptions]="{ exact : route.exact || false }"
+      [ngClass]="activeLink.isActive ? 'active-link' : ''"
+    >
+      <p
+        class="text-[#667085] text-base group-hover:text-[#1368EC] font-medium leading-6 m-0"
       >
-        <!-- : 'bg-[white]' -->
-        <div>
-          <img
-            [src]="activeLink.isActive ? route.activeImg : route.img"
-            class="block group-hover:hidden"
-            alt=""
-          />
-          <img [src]="route.activeImg" class="hidden group-hover:block" alt="" />
-        </div>
-        <p
-          class="text-[#6E7A91] text-base group-hover:text-primaryBlue font-medium leading-6 m-0"
-          [ngClass]="activeLink.isActive ? 'text-primaryBlue' : 'text-[#6E7A91]'"
-        >
-          {{ route?.routeName }}
-        </p>
-      </div>
+        {{ route.routeName }}
+      </p>
     </div>
   </div>
-  
+</div>
+

@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import {
+  Router,
+  RouterModule,
+  Event as NavigationEvent,
+  NavigationStart,
+} from '@angular/router';
 @Component({
   selector: 'app-app-sidebar',
   standalone: true,
@@ -9,31 +14,21 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./app-sidebar.component.scss'],
 })
 export class AppSidebarComponent implements OnInit {
-
-  routes = [
-    {
-      img: 'assets/images/icons/dashboard-icon.svg',
-      routeName: 'Dashboard',
-      routePath: '/main/dashboard',
-      activeImg: 'assets/images/icons/dashboard-active-icon.svg',
-      exact: true,
-      permission: false,
-    },
-    {
-      img: 'assets/images/icons/fip-icon.svg',
-      routeName: 'FIPs',
-      routePath: '/main/fip',
-      activeImg: 'assets/images/icons/fip-active-icon.svg',
-      permission: false,
-    },
-  
-  ];
+  @Input() routes: { routePath: string; routeName: string , exact?: boolean}[] = [];
   constructor(
     // private matDialog: MatDialog,
-  ) {
-  }
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.event$ = this.router.events.subscribe(
+    //   (event: NavigationEvent)=> {
+    //     if(event instanceof NavigationStart){
+    //       console.log(event.url)
+    //     }
+    //   }
+    // )
+  }
 
   // logOut() {
   //   this.matDialog.open(LogoutModalComponent, {

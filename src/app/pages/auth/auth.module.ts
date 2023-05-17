@@ -5,7 +5,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { EmailSentComponent } from 'src/app/components/auth/email-sent/email-sent.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -15,6 +14,7 @@ import { AppButtonComponent } from 'src/app/shared/components/app-button/app-but
 import { AppNumberInputComponent } from 'src/app/shared/components/app-number-input/app-number-input.component';
 import { AppPasswordInputComponent } from 'src/app/shared/components/app-password-input/app-password-input.component';
 import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/app-text-input.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -36,7 +36,7 @@ import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/
     AppPasswordInputComponent,
     AppNumberInputComponent,
     EmailSentComponent,
-    SignUpEmailComponent
+    SignUpEmailComponent,
   ]
 })
 export class AuthModule { }

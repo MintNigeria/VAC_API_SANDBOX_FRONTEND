@@ -25,5 +25,5 @@ export class SignUpComponent implements OnInit {
       phone: ['', Validators.required]
     })
   }
-  signUpButton(){this.router.navigateByUrl('/new-password')}
+  signUpButton(){this.router.navigateByUrl('/auth/new-password')}
 }

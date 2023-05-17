@@ -7,13 +7,12 @@
             class="cursor-pointer"
             src="assets/images/Sandboxlogo.png"
             alt="Sandbox"
-            routerLink="/"
           />
         </div>
       </div>
       <div class="mb-12">
         <div>
-          <h2 class="mb-3 text-[#101828] font-semibold leading-10 text-3xl">
+          <h2 class="mb-3 text-[#101828] font-medium leading-10 text-3xl">
             Log in
           </h2>
           <p class="mb-8 text-base text-[#667085]">
@@ -67,7 +66,7 @@
           </div>
           <div
             class="text-[#1368EC] text-sm cursor-pointer"
-            routerLink="/forgot-password"
+            routerLink="/auth/forgot-password"
           >
             Forgot password
           </div>
@@ -79,7 +78,7 @@
             [status]="status"
             (buttonClick)="loginAdmin()"
             [customClass]="
-              'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize flex justify-center w-full py-3 rounded-xl px-6 text-center md:text-base text-white'
+              'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize flex outline-0 border-0 justify-center w-full py-3 rounded-xl px-6 text-center md:text-base text-white'
             "
             [buttonText]="'Continue'"
           ></app-app-button>
@@ -88,7 +87,7 @@
           Don’t have an account?
           <span
             class="text-[#1368EC] cursor-pointer font-medium"
-            routerLink="/sign-up"
+            routerLink="/auth/sign-up"
             >Sign Up</span
           >
         </p>
