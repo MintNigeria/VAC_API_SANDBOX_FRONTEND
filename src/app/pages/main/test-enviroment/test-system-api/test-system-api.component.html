@@ -1,5 +1,5 @@
 <div class="border-b-2 mb-3">
-  <h3 class="text-2xl font-semibold text-[#101828] mb-2">
+  <h3 class="text-2xl font-medium text-[#101828] mb-2">
     VAC system integrates Partner’s API
   </h3>
   <p class="text-[#475467] mb-4">
@@ -10,7 +10,7 @@
 <form class="mt-4 grid gap-4 md:grid-cols-[1fr_auto]" [formGroup]="apiUrl">
   <div class="grid grid-cols-[auto_1fr]">
     <label
-      class="text-base font-semibold text-[#101828] bg-white px-[14px] py-[10px] rounded-l-lg border border-solid border-[#D0D5DD]"
+      class="text-base font-medium text-[#101828] bg-white px-[14px] py-[10px] rounded-l-lg border border-solid border-[#D0D5DD]"
       for="partner api endpoint"
       >VAC System API Endpoint</label
     >
@@ -24,8 +24,6 @@
   </div>
   <app-app-button
     [overRideButtonClass]="true"
-    [disabled]="apiUrl.invalid || status === 'LOADING'"
-    [status]="status"
     (buttonClick)="partnerApi()"
     [customClass]="
       'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
@@ -35,14 +33,14 @@
 </form>
 
 <div class="border-b-2 mb-3 mt-8">
-  <h3 class="text-lg font-semibold text-[#101828]">API Test Results</h3>
+  <h3 class="text-lg font-medium text-[#101828]">API Test Results</h3>
   <p class="text-[#475467] mb-4">
     The tested API results will be displayed below:
   </p>
 </div>
 <div class="flex items-center mb-4 gap-6">
   <p
-    class=""
+    class="cursor-pointer"
     routerLink="/test-enviroment/test-system-API/system-request-parameter"
     routerLinkActive
     #activeLink="routerLinkActive"
@@ -51,6 +49,7 @@
     VAC System Request Parameters
   </p>
   <p
+  class="cursor-pointer"
     routerLink="/test-enviroment/test-system-API/response-parameter"
     routerLinkActive
     #activeLink1="routerLinkActive"
@@ -60,3 +59,17 @@
   </p>
 </div>
 <router-outlet></router-outlet>
+<div class="flex items-center gap-8 mt-8">
+  <p class="font-medium text-[#101828]">
+    Do you want to request for Live Production URL to Migrate Data?
+  </p>
+
+  <app-app-button
+    [overRideButtonClass]="true"
+    (buttonClick)="requestUrl()"
+    [customClass]="
+      'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+    "
+    [buttonText]="'Yes, Request for Live URL'"
+  ></app-app-button>
+</div>

@@ -1,12 +1,12 @@
 <div class="mb-8">
-  <h3 class="text-2xl font-semibold text-[#101828] mb-2">
+  <h3 class="text-2xl font-medium text-[#101828] mb-2">
     Welcome to VAC SandBox
   </h3>
   <p class="text-[#475467] mb-9">
     Test API and Migrate partner data with ease.
   </p>
   <div class="bg-white p-10 rounded-lg">
-    <h4 class="text-2xl font-semibold text-[#101828] mb-2">
+    <h4 class="text-2xl font-medium text-[#101828] mb-2">
       Partner Data Migration
     </h4>
     <p class="text-[#475467] mb-10">
@@ -20,7 +20,7 @@
   </div>
 </div>
 <div class="bg-white p-8 rounded-lg">
-  <h2 class="text-2xl font-semibold text-[#101828] mb-2">
+  <h2 class="text-2xl font-medium text-[#101828] mb-2">
     VAC System integrates Institution’s API
   </h2>
   <p class="text-[#475467] mb-8">
@@ -38,4 +38,19 @@
       live environment.
     </li>
   </ul>
+  <div class="mt-8">
+    <h3 class="text-[#1368EC] mb-3 font-medium border-b-2 border-b-[#1368EC] pb-3 w-fit">Sample VAC System API Standard</h3>
+    <!-- apu editor -->
+    <div>
+      <app-editor [control]="partnerApi"></app-editor>
+    </div>
+    <app-app-button
+    [overRideButtonClass]="true"
+    routerLink="/test-enviroment/test-partner-API"
+    [customClass]="
+      'btn bg-[#4086EF] mt-4 hover:bg-[#4086EF]  capitalize  outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+    "
+    [buttonText]="'Try it Now'"
+  ></app-app-button>
+  </div>
 </div>

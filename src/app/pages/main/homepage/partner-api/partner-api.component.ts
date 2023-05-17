@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-partner-api',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./partner-api.component.scss']
 })
 export class PartnerAPIComponent implements OnInit {
-
+@Input() partnerApi: FormControl = new FormControl
   constructor() { }
 
   ngOnInit(): void {

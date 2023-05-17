@@ -10,14 +10,16 @@ import { TestEnviromentComponent } from './test-enviroment/test-enviroment/test-
 import { HomepageComponent } from './homepage/homepage/homepage.component';
 import { TestPartnerAPIComponent } from './test-enviroment/test-partner-api/test-partner-api.component';
 import { TestSystemAPIComponent } from './test-enviroment/test-system-api/test-system-api.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/app-text-input.component';
 import { AppButtonComponent } from 'src/app/shared/components/app-button/app-button.component';
 import { AppSelectComponent } from 'src/app/shared/components/app-select/app-select.component';
 import { SystemRequestParameterComponent } from './test-enviroment/system-request-parameter/system-request-parameter.component';
 import { ResponseParameterComponent } from './test-enviroment/response-parameter/response-parameter.component';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
-
+import { PartnerAPIComponent } from './homepage/partner-api/partner-api.component';
+import { SystemAPIComponent } from './homepage/system-api/system-api.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-succ
     SupportComponent,
     TestEnviromentComponent,
     HomepageComponent,
+    PartnerAPIComponent,
+    SystemAPIComponent,
     TestPartnerAPIComponent,
     TestSystemAPIComponent,
     SystemRequestParameterComponent,
@@ -39,7 +43,8 @@ import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-succ
     AppTextInputComponent,
     AppSelectComponent,
     AppButtonComponent,
-    ConfirmSuccessModalComponent
+    ConfirmSuccessModalComponent,
+   EditorComponent
   ]
 })
 export class MainModule { }

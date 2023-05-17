@@ -22,12 +22,14 @@ export class AppHeaderComponent implements OnInit {
   logOut(){
     this.matDialog.open(ConfirmSuccessModalComponent, {
       data : {
-        image: 'assets/images/avatar.png',
+        image: 'assets/images/log-logo.png',
         title: 'Are you sure you want to log out from VAC Sandbox?',
         content: 'Are you sure you want to log out from VAC Sandbox?',
         acceptText: 'Log out',
         cancelText: 'No, Cancel'
-      }
+      },
+      panelClass: 'custom-class',
+
     })
   }
 }

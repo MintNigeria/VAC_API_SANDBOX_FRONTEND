@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-system-api',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./system-api.component.scss']
 })
 export class SystemAPIComponent implements OnInit {
-
+@Input() systemApi: FormControl = new FormControl
   constructor() { }
 
   ngOnInit(): void {
