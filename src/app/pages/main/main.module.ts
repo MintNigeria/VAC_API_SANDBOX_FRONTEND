@@ -18,8 +18,9 @@ import { ResponseParameterComponent } from './test-enviroment/response-parameter
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 import { PartnerAPIComponent } from './homepage/partner-api/partner-api.component';
 import { SystemAPIComponent } from './homepage/system-api/system-api.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
+import { CodeEditorModule } from '@ngstack/code-editor';
 
 @NgModule({
   declarations: [
@@ -40,11 +41,13 @@ import { EditorComponent } from 'src/app/shared/components/editor/editor.compone
     AppHeaderComponent,
     AppSidebarComponent,
     ReactiveFormsModule,
+    FormsModule,
     AppTextInputComponent,
     AppSelectComponent,
     AppButtonComponent,
     ConfirmSuccessModalComponent,
-   EditorComponent
-  ]
+    EditorComponent,
+    CodeEditorModule.forRoot(),
+  ],
 })
-export class MainModule { }
+export class MainModule {}
