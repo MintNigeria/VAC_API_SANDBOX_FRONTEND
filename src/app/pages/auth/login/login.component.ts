@@ -42,5 +42,7 @@ export class LoginComponent implements OnInit {
       ),
     });
   }
-  loginAdmin(){}
+  loginAdmin(){
+    this.router.navigateByUrl("/")
+  }
 }
