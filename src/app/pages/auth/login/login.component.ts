@@ -43,6 +43,6 @@ export class LoginComponent implements OnInit {
     });
   }
   loginAdmin(){
-    this.router.navigateByUrl("/")
+    this.router.navigateByUrl("/main")
   }
 }
