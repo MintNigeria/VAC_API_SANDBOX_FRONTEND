@@ -7,7 +7,7 @@ import { AppSidebarComponent } from 'src/app/shared/components/app-sidebar/app-s
 import { PartnerAPIComponent } from './partner-api/partner-api.component';
 import { SystemAPIComponent } from './system-api/system-api.component';
 import { AppButtonComponent } from 'src/app/shared/components/app-button/app-button.component';
-import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [HomepageComponent, PartnerAPIComponent, SystemAPIComponent],
@@ -16,7 +16,7 @@ import { EditorComponent } from 'src/app/shared/components/editor/editor.compone
     HomepageRoutingModule,
     AppSidebarComponent,
     AppButtonComponent,
-    EditorComponent,
+    SharedModule,
   ],
 })
 export class HomepageModule {}
