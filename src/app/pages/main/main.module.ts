@@ -19,7 +19,7 @@ import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-succ
 import { PartnerAPIComponent } from './homepage/partner-api/partner-api.component';
 import { SystemAPIComponent } from './homepage/system-api/system-api.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { EditorComponent } from 'src/app/shared/components/editor/editor.compone
   ],
   imports: [
     CommonModule,
+    SharedModule,
     MainRoutingModule,
     AppHeaderComponent,
     AppSidebarComponent,
@@ -44,7 +45,6 @@ import { EditorComponent } from 'src/app/shared/components/editor/editor.compone
     AppSelectComponent,
     AppButtonComponent,
     ConfirmSuccessModalComponent,
-   EditorComponent
   ]
 })
 export class MainModule { }

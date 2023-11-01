@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 @NgModule({
   declarations: [
     AppComponent,
@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    MonacoEditorModule.forRoot(), // use forRoot() in main app module only.
     AppRoutingModule,
   ],
   providers: [],
