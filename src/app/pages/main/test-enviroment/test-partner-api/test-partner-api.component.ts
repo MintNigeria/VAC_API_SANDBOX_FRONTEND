@@ -144,23 +144,4 @@ export class TestPartnerAPIComponent implements OnInit {
       },
     });
   }
-
-  theme = 'vs-dark';
-
-  codeModel: CodeModel = {
-    language: 'json',
-    uri: 'main.json',
-    value: '{}',
-  };
-
-  options = {
-    contextmenu: true,
-    minimap: {
-      enabled: true,
-    },
-  };
-
-  onCodeChanged(value: any) {
-    console.log('CODE', value);
-  }
 }

@@ -20,7 +20,6 @@ import { PartnerAPIComponent } from './homepage/partner-api/partner-api.componen
 import { SystemAPIComponent } from './homepage/system-api/system-api.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
-import { CodeEditorModule } from '@ngstack/code-editor';
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import { CodeEditorModule } from '@ngstack/code-editor';
     AppButtonComponent,
     ConfirmSuccessModalComponent,
     EditorComponent,
-    CodeEditorModule.forRoot(),
   ],
 })
 export class MainModule {}
