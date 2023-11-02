@@ -9,22 +9,21 @@ import { AppButtonComponent } from '../../components/app-button/app-button.compo
   standalone: true,
   imports: [CommonModule, AppButtonComponent],
   templateUrl: './confirm-success-modal.component.html',
-  styleUrls: ['./confirm-success-modal.component.scss']
+  styleUrls: ['./confirm-success-modal.component.scss'],
 })
 export class ConfirmSuccessModalComponent implements OnInit {
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data:any,
-    private route :Router,
-    private matDialogRef : MatDialogRef<ConfirmSuccessModalComponent>
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private route: Router,
+    private matDialogRef: MatDialogRef<ConfirmSuccessModalComponent>
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   close() {
     this.matDialogRef.close(false);
   }
 
   confirm() {
-   this.matDialogRef.close(true) 
+    this.matDialogRef.close(true);
   }
 }
