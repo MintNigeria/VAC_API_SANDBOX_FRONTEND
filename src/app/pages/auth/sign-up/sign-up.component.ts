@@ -17,12 +17,15 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
     this.initSignUpForm()
   }
+  get errorMessage() {
+    return this.signUp.controls;
+  }
   initSignUpForm(){
     this.signUp = this.fb.group({
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
       identifier: ['', Validators.required],
-      phone: ['', Validators.required]
+      phone: ['', [Validators.required, Validators.pattern('[0-9]{12}$')]]
     })
   }
   signUpButton(){this.router.navigateByUrl('/new-password')}
