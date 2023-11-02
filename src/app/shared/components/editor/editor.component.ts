@@ -9,12 +9,12 @@ import { Component, Input, OnInit } from '@angular/core';
   //   MonacoEditorModule.forRoot(),
   //  ReactiveFormsModule],
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
   // @Input() control: FormControl = new FormControl()
-  editorOptions = {theme: 'vs-dark', language: 'javascript'};
-  code: string= `{
+  editorOptions = { theme: 'vs-dark', language: 'javascript' };
+  code: string = `{
     firstName: string
     lastName: string
     middleName: string
@@ -22,20 +22,18 @@ export class EditorComponent implements OnInit {
     stateOfOrigin: string
     academicInformationVM: {
       programme: string
-faculty: string
-department: string
-matriculationNumber: string
-degree: string
-grade: string
-yearOfEntry: string
-yearOfGraduation: string
+      faculty: string
+      department: string
+      matriculationNumber: string
+      degree: string
+      grade: string
+      yearOfEntry: string
+      yearOfGraduation: string
     }
     gender: string
     dateOfBirth: string
   }
 `;
 
-  ngOnInit(): void {
-
-}
+  ngOnInit(): void {}
 }

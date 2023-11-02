@@ -1,0 +1,8 @@
+<div class="w-[400px] bg-white p-8 rounded-xl mx-auto text-center items-center">
+    <img class="mb-8 mx-auto" [src]="data.image" alt="modal-image" />
+    <h2 class="text-[#1059C6] md:text-lg font-bold mb-8">{{ data.title }}</h2>
+    <p class="mb-8">{{ data.content }}</p>
+    <app-app-button [overRideButtonClass]="true" [buttonText]="data.okayText" (buttonClick)="confirm()" [customClass]="
+        'btn bg-[#4086EF] hover:bg-[#1059C6] mb-4 capitalize flex justify-center w-full py-3 outline-0 border-0 rounded-xl px-6 text-center md:text-base text-white'
+      "></app-app-button>
+</div>
