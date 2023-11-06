@@ -13,7 +13,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class EditorComponent implements OnInit {
   // @Input() control: FormControl = new FormControl()
-  editorOptions = {theme: 'vs-dark', language: 'javascript', readOnly: true};
+  editorOptions = {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'javascript', readOnly: true};
   code: string= `{
     firstName: string
     lastName: string

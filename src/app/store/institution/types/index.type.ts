@@ -1,0 +1,33 @@
+export interface IInstitutionStateInterface {
+  institutions: { data: any[]; totalCount: number };
+  institution: any;
+  institutionType: any;
+  institutionTypeLinkedToBody: any;
+  institutionSector: any;
+  institutionBody: any;
+  institutionUsers: any;
+  institutionAdminTransaction: any;
+  institutionRegistration: any;
+  otpVerification: any;
+  institutionConfiguration: any;
+  userInfo: any;
+  institutionFaculty: any;
+  institutionDepartment: any;
+  institutionRecord: any;
+  institutionRecordNames: any;
+  institutionDegreeType: any;
+  institutiongrade: any;
+  newDegreeType: any;
+  newgrade: any;
+  newDepartment: any;
+  newFaculty: any;
+  updateDegreeType: any;
+  updategrade: any;
+  updateRegistration: any;
+  updateDepartment: any;
+  updateFaculty: any;
+  faultyAndDepartmentName: any;
+  dropdown: any;
+  degreeTypeByName: any;
+  transactionTypeFilter: any;
+}
