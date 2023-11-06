@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./system-api.component.scss']
 })
 export class SystemAPIComponent implements OnInit {
-@Input() systemApi: FormControl = new FormControl
+// @Input() systemApi: FormControl = new FormControl
   constructor() { }
 
   ngOnInit(): void {

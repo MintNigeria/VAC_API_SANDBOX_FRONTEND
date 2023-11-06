@@ -10,8 +10,8 @@ import { AppButtonComponent } from 'src/app/shared/components/app-button/app-but
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResponseParameterComponent } from './tabs/response-parameter/response-parameter.component';
 import { SystemRequestParameterComponent } from './tabs/system-request-parameter/system-request-parameter.component';
-import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-succ
     ReactiveFormsModule,
     FormsModule,
     ConfirmSuccessModalComponent,
-    EditorComponent,
+    SharedModule,
   ],
 })
 export class TestEnvironmentModule {}

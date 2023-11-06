@@ -41,12 +41,21 @@
     </li>
   </ul>
   <div class="mt-8">
-    <h3 class="text-[#1368EC] mb-3 font-medium border-b-2 border-b-[#1368EC] pb-3 w-fit">VAC System API Standard</h3>
-    <!-- api editor -->
-    <div>
-      <app-editor [control]="systemApi"></app-editor>
+    <div class="flex items-center mb-4 gap-6">
+      <p class="cursor-pointer" routerLink="/main/system-api/system-request-parameter" routerLinkActive
+        #activeLink="routerLinkActive" [ngClass]="activeLink.isActive ? 'active' : 'text-[#667085] font-medium'">
+        VAC System API Standard
+      </p>
+      <p class="cursor-pointer" routerLink="/main/system-api/response-parameter" routerLinkActive
+        #activeLink1="routerLinkActive" [ngClass]="activeLink1.isActive ? 'active' : 'text-[#667085] font-medium'">
+        Sample API Response Parameter
+      </p>
     </div>
-    <app-app-button [overRideButtonClass]="true" routerLink="/main/test-environment/test-system-API/system-request-parameter"
+    <router-outlet></router-outlet>
+    <div>
+      <app-editor ></app-editor>
+    </div>
+    <app-app-button [overRideButtonClass]="true" routerLink="/main/system-api/system-request-parameter"
       [customClass]="
       'btn bg-[#4086EF] mt-4 hover:bg-[#4086EF] capitalize  outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
     " [buttonText]="'Try it Now'"></app-app-button>

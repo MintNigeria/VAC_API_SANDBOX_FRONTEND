@@ -14,13 +14,16 @@ import { AppSelectComponent } from 'src/app/shared/components/app-select/app-sel
 import { SystemRequestParameterComponent } from './test-environment/tabs/system-request-parameter/system-request-parameter.component';
 import { ResponseParameterComponent } from './test-environment/tabs/response-parameter/response-parameter.component';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
+import { PartnerAPIComponent } from './homepage/partner-api/partner-api.component';
+import { SystemAPIComponent } from './homepage/system-api/system-api.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditorComponent } from 'src/app/shared/components/editor/editor.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [MainComponent, SupportComponent],
   imports: [
     CommonModule,
+    SharedModule,
     MainRoutingModule,
     AppHeaderComponent,
     AppSidebarComponent,
@@ -30,7 +33,6 @@ import { EditorComponent } from 'src/app/shared/components/editor/editor.compone
     AppSelectComponent,
     AppButtonComponent,
     ConfirmSuccessModalComponent,
-    EditorComponent,
   ],
 })
 export class MainModule {}
