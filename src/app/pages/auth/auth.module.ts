@@ -15,7 +15,9 @@ import { AppNumberInputComponent } from 'src/app/shared/components/app-number-in
 import { AppPasswordInputComponent } from 'src/app/shared/components/app-password-input/app-password-input.component';
 import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/app-text-input.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SignUpComponent,
     NewPasswordComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AppNumberInputComponent,
     EmailSentComponent,
     SignUpEmailComponent,
-  ]
+    MatSelectModule,
+    MatFormFieldModule,
+    NgSelectModule
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}
