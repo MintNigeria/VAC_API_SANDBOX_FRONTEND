@@ -4,6 +4,7 @@ import * as fromAuth from '../store/auth/reducers';
 import * as fromShared from '../store/shared/app.reducer';
 import * as fromGraduates from '../store/graduates/reducers'
 import * as fromInstitutions from '../store/institution/reducers';
+import * as fromSecurity from '../store/security-setup/reducer'
 
 
 import {
@@ -16,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { IAuthStateInterface } from '../store/auth/index.types';
 import { GraduatesStateInterface } from '../store/graduates/types/index.type';
 import { IInstitutionStateInterface } from '../store/institution/types/index.type';
+import { ISecurityStateInterface } from '../store/security-setup/types/index.types'
 
 
 // all module state should be imported here
@@ -25,6 +27,7 @@ export interface AppStateInterface {
   graduates: GraduatesStateInterface,
   // auditLog : AuditLogStateInterface
   institutions: IInstitutionStateInterface;
+  setupEncryptionAndDecryption: ISecurityStateInterface;
 
 }
 
@@ -42,13 +45,13 @@ export const reducers: ActionReducerMap<AppStateInterface> = {
   apiResponse: fromShared.appReducer,
   institutions: fromInstitutions.institutionReducers,
   graduates: fromGraduates.graduatesReducer,
-
+  setupEncryptionAndDecryption: fromSecurity.securityReducer
 
 
 
 };
 
-const reducerKeys = ['auth', 'institutions','graduates'];
+const reducerKeys = ['auth', 'institutions','graduates', 'security'];
 
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>

@@ -1,6 +1,6 @@
 export interface ISetupEncryptionAndDecryption {
-  id: number;
-  institutionId: number;
+  id: string;
+  institutionId: string;
   institutionName: string;
   ivKey: string;
   secretKey: string;

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Store, select } from '@ngrx/store';
+import { setupEncryptionAndDecryption } from 'src/app/store/security-setup/action';
+import { securitySelector } from 'src/app/store/security-setup/selector';
+import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
 
 @Component({
@@ -9,6 +13,9 @@ import { Status } from 'src/app/types/shared.types';
   styleUrls: ['./api-configuratiosn.component.scss'],
 })
 export class ApiConfiguratiosnComponent implements OnInit {
+  security$ = this.appStore.pipe(select(securitySelector));
+  id: string = ''
+
   encrypTionForm!: FormGroup;
   mockData = [
     {
@@ -25,13 +32,19 @@ export class ApiConfiguratiosnComponent implements OnInit {
   activeTab: string = 'encryption';
   status: Status = Status.NORMAL;
 
-  constructor(private fb: FormBuilder, private matDialog: MatDialog) {}
+  constructor(private fb: FormBuilder, private matDialog: MatDialog,   private store: Store,
+    private appStore: Store<AppStateInterface>,) {}
 
   ngOnInit(): void {
     this.encrypTionForm = this.fb.group({
       ivKey: ['', Validators.required],
       secretKey: ['', Validators.required],
     });
+    this.store.dispatch(
+      setupEncryptionAndDecryption({
+        id: this.id
+      })
+    );
   }
 
   selectTab(i: number) {

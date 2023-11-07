@@ -11,8 +11,8 @@ export class TestEnvironmentService extends BaseURI {
     super();
   }
 
-  getEncryptionKeysWithInstitutionId(institutionId: string | number) {
-    this.http.get<any>(
+  getEncryptionKeysWithInstitutionId(institutionId: string | number): Observable<any> {
+    return this.http.get<any>(
       `${this.baseUrl}InstitutionEncryption/GetEncryptionKeysWithInstitutionId/${institutionId}`
     );
   }
@@ -20,8 +20,8 @@ export class TestEnvironmentService extends BaseURI {
   createOrUpdateInstitutionEncryptionKeys(
     institutionId: string | number,
     payload: any
-  ) {
-    this.http.post<any>(
+  ) : Observable<any>{
+    return this.http.post<any>(
       `${this.baseUrl}InstitutionEncryption/CrearOrUpdateInstitutionEncryptionKeys/${institutionId}`,
       payload
     );

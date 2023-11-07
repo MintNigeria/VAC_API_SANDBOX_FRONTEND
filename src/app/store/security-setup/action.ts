@@ -1,12 +1,15 @@
 import { createAction, props } from "@ngrx/store";
+import { ISetupEncryptionAndDecryption } from "./types/index.types";
 
 export const setupEncryptionAndDecryption = createAction(
     '[security] setup encryption and decryption',
+    props<{id: any}>()
+
 );
 
 export const setupEncryptionAndDecryptionSuccess = createAction(
     '[security] setup encryption and decryption success',
-    props<{payload: any}>()
+    props<{payload: ISetupEncryptionAndDecryption}>()
 );
 
 export const integratePartnerAPI = createAction(
