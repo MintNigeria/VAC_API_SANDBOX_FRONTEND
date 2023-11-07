@@ -6,10 +6,10 @@ import { Status } from 'src/app/types/shared.types';
 @Component({
   selector: 'app-api-configuratiosn',
   templateUrl: './api-configuratiosn.component.html',
-  styleUrls: ['./api-configuratiosn.component.scss']
+  styleUrls: ['./api-configuratiosn.component.scss'],
 })
 export class ApiConfiguratiosnComponent implements OnInit {
-  encrypTionForm!: FormGroup
+  encrypTionForm!: FormGroup;
   mockData = [
     {
       tabName: 'Setup Encyrption & Decryption ',
@@ -20,7 +20,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
       tabName: 'Integrate with Partner API',
       type: 'endpoint',
       apiUrl: 'https://2',
-    }
+    },
   ];
   activeTab: string = 'encryption';
   status: Status = Status.NORMAL;
@@ -30,8 +30,8 @@ export class ApiConfiguratiosnComponent implements OnInit {
   ngOnInit(): void {
     this.encrypTionForm = this.fb.group({
       ivKey: ['', Validators.required],
-      secretKey: ['', Validators.required]
-    })
+      secretKey: ['', Validators.required],
+    });
   }
 
   selectTab(i: number) {
@@ -41,5 +41,4 @@ export class ApiConfiguratiosnComponent implements OnInit {
   partnerApi() {
     // this.requestBtn = true;
   }
-
 }
