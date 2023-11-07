@@ -27,27 +27,28 @@ export interface CodeModel {
   styleUrls: ['./test-partner-api.component.scss'],
 })
 export class TestPartnerAPIComponent implements OnInit {
+  encrypTionForm!: FormGroup
   mockData = [
     {
-      tabName: 'Sample Test 1',
+      tabName: 'Setup Encyrption & Decryption ',
       apiUrl: 'https://1',
     },
     {
-      tabName: 'Sample Test 2',
+      tabName: 'Integrate with Partner API',
       apiUrl: 'https://2',
     },
-    {
-      tabName: 'Sample Test 3',
-      apiUrl: 'https://3',
-    },
-    {
-      tabName: 'Sample Test 4',
-      apiUrl: 'https://4',
-    },
-    {
-      tabName: 'Sample Test 5',
-      apiUrl: 'https://5',
-    },
+    // {
+    //   tabName: 'Sample Test 3',
+    //   apiUrl: 'https://3',
+    // },
+    // {
+    //   tabName: 'Sample Test 4',
+    //   apiUrl: 'https://4',
+    // },
+    // {
+    //   tabName: 'Sample Test 5',
+    //   apiUrl: 'https://5',
+    // },
   ];
 
   exampleResponse = {
@@ -101,6 +102,10 @@ export class TestPartnerAPIComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeTab = this.mockData[0]; //this should be set on api call not oninit
+    this.encrypTionForm = this.fb.group({
+      ivKey: ['', Validators.required],
+      secretKey: ['', Validators.required]
+    })
   }
 
   partnerApi() {

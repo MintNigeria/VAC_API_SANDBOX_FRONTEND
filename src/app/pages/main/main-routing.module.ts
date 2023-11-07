@@ -6,6 +6,7 @@ import { TestSystemAPIComponent } from './test-environment/test-system-api/test-
 import { TestPartnerAPIComponent } from './test-environment/test-partner-api/test-partner-api.component';
 import { SystemRequestParameterComponent } from './test-environment/tabs/system-request-parameter/system-request-parameter.component';
 import { ResponseParameterComponent } from './test-environment/tabs/response-parameter/response-parameter.component';
+import { ApiConfiguratiosnComponent } from './api-configuratiosn/api-configuratiosn.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
           ),
       },
       { path: 'support', component: SupportComponent },
+      { path: 'api-configuration', component: ApiConfiguratiosnComponent },
     ],
   },
 ];

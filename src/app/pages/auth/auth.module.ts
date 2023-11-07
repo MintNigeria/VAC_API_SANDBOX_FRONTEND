@@ -18,6 +18,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AuthEffects } from 'src/app/store/auth/effects';
+import { authReducers } from 'src/app/store/auth/reducers';
+import { InstitutionEffects } from 'src/app/store/institution/effects';
 
 @NgModule({
   declarations: [
@@ -41,6 +46,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     SignUpEmailComponent,
     MatSelectModule,
     MatFormFieldModule,
+    StoreModule.forFeature('auth', authReducers),
+    EffectsModule.forFeature([AuthEffects, InstitutionEffects]),
+
     NgSelectModule
   ],
 })

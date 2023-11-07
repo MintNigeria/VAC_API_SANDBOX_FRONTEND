@@ -6,6 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { createAccount, createAccountSuccess } from 'src/app/store/auth/action';
+import { getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess } from 'src/app/store/institution/action';
+import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
 // import { IDropdownSettings, IDropdownSettings } from 'ng-multiselect-dropdown';
 
@@ -29,11 +34,22 @@ export class SignUpComponent implements OnInit {
     { id: 3, name: 'Opel' },
     { id: 4, name: 'Audi' },
   ];
+  institutionList: any;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router,
+    private store: Store,
+    private appStore: Store<AppStateInterface>,
+    private actions$: Actions,) {}
 
   ngOnInit(): void {
     this.initSignUpForm();
+    this.store.dispatch(getAllInstitutionsDropdown({payload : {institutionStatus:2}}))
+    this.actions$.pipe(ofType(getAllInstitutionsDropdownSuccess)).subscribe((res: any) => {
+      this.institutionList = res.payload;
+      console.log(this.institutionList)
+    })
   }
   onItemSelect(item: any) {
     console.log(item);
@@ -48,12 +64,28 @@ export class SignUpComponent implements OnInit {
     this.signUp = this.fb.group({
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
-      identifier: ['', Validators.required],
-      phone: ['', [Validators.required, Validators.pattern('[0-9]{12}$')]],
-      institution: '',
+      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{12}$')]],
+      email: ['', Validators.compose([Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), Validators.required])],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      institutionId: ['', Validators.required],
+      institutionName: ['', Validators.required],
     });
   }
   signUpButton() {
-    this.router.navigateByUrl('/new-password');
+    this.store.dispatch(createAccount({payload: this.signUp.value}));
+    this.actions$.pipe(ofType(createAccountSuccess)).subscribe((res: any) => {
+      console.log(res)
+      if (res) {
+        this.router.navigateByUrl('/new-password');
+
+      }
+    })
+  }
+
+  selectInstitutionName(event: any) {
+    
+    this.signUp.controls['institutionName'].setValue(event.institutionName)
+    this.signUp.controls['institutionId'].setValue(event.id)
+    console.log(this.signUp.value)
   }
 }

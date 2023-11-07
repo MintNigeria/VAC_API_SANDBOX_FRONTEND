@@ -24,28 +24,28 @@
       <form [formGroup]="loginAuth">
         <div class="mb-4">
           <div class="text-base text-[#6E7A91] mb-2">
-            <label for="identifier">Your Profile Identifier</label>
+            <label for="identifier">Your Email</label>
           </div>
           <div class="relative w-full mt-2">
             <app-app-text-input
               [class]="
                 ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
               "
-              [placeholder]="'Enter your identifier'"
-              [control]="$any(loginAuth.get('identifier'))"
-              [errorMessage]="'identifier is Required'"
+              [placeholder]="'Enter your email'"
+              [control]="$any(loginAuth.get('email'))"
+              [errorMessage]="'Email is Required'"
               [required]="true"
             >
             </app-app-text-input>
 
-            <img
+            <!-- <img
               *ngIf="loginAuth.value.identifier?.length"
               class="w-4 h-4 cursor-pointer absolute right-5 top-1/2 translate-y-[-50%]"
               src="assets/images/minus.svg"
               [ngClass]="{ 'top-[38%]': loginAuth.get('identifier')?.invalid }"
               alt="clear-image"
               (click)="clearInput('identifier')"
-            />
+            /> -->
           </div>
           <div class="form-group mt-8 mb-3">
             <div class="text-base text-[#6E7A91] mb-2">
