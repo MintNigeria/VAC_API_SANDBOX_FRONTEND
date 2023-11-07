@@ -1,0 +1,131 @@
+<div class="layout">
+    <aside>
+        <app-app-sidebar [routes]="[
+          {
+            routeName: 'Integrate VAC System’s API',
+            routePath: '/main/test-environment/test-system-API'
+          },
+          {
+            routeName: 'VAC system Integrates partners’ API',
+            routePath: '/main/test-environment/test-partner-API'
+          },
+          {
+            routeName: 'Security Setup',
+            routePath: '/main/api-configuration'
+          },
+        ]">
+        </app-app-sidebar>
+    </aside>
+    <main>
+        <div class="max-w-screen-xl mx-auto">
+            <div class="border-b-2 mb-3">
+                <h3 class="text-2xl font-medium text-[#101828] mb-2">
+                  VAC Sandbox configurations
+                </h3>
+                <p class="text-[#475467] mb-4">
+                  Setup your configurations on the VAC sandbox system to see how it fit, detect
+                  problem that may arise etc.
+                </p>
+              </div>
+              <div class="flex items-center mb-4 gap-6">
+                <p class="cursor-pointer text-[#667085] font-medium pb-3" *ngFor="let item of mockData; let i = index"
+                  (click)="selectTab(i)" [ngClass]="{'active': activeTab === item.type}">
+                  {{item.tabName}}
+                </p>
+              </div>
+              <ng-container *ngIf="activeTab === 'encryption'">
+                <form [formGroup]="encrypTionForm">
+              
+                  <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0 mb-6">
+                    <div class="w-full md:w-1/2 px-3  md:mb-0">
+                      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">IV key
+                        <span class="text-danger">*</span> </label>
+                      <app-app-text-input
+                              [class]="
+                                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+                              "
+                              [placeholder]="'Enter your IV Key'"
+                              [control]="$any(encrypTionForm.get('ivKey'))"
+                              [errorMessage]="'IV Key is Required'"
+                              [required]="true"
+                            >
+                            </app-app-text-input>
+                    </div>
+                    <div class="w-full md:w-1/2 px-3  md:mb-0">
+                      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Configuration
+                        <span class="text-danger">*</span> </label>
+                      
+                  <app-app-text-input
+                              [class]="
+                                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+                              "
+                              [placeholder]="'Enter your Secret Key'"
+                              [control]="$any(encrypTionForm.get('secretKey'))"
+                              [errorMessage]="'Secret Key is Required'"
+                              [required]="true"
+                            >
+                            </app-app-text-input>
+                    </div>
+                  </div>
+                  <div>
+                      <app-app-button [overRideButtonClass]="true" [disabled]="encrypTionForm.invalid" [status]="status"
+                    (buttonClick)="partnerApi()" [customClass]="
+                      'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+                    " [buttonText]="'Save Setup'"></app-app-button>
+                    </div>
+                </form>
+               
+              
+               
+                
+              </ng-container>
+              <ng-container *ngIf="activeTab === 'endpoint'">
+                <form [formGroup]="encrypTionForm">
+              
+                  <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0 mb-6">
+                    <div class="w-full md:w-1/2 px-3  md:mb-0">
+                      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Record Query Endpoint
+                        <span class="text-danger">*</span> </label>
+                      <app-app-text-input
+                              [class]="
+                                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+                              "
+                              [placeholder]="'Enter your Record Query Endpoint'"
+                              [control]="$any(encrypTionForm.get('ivKey'))"
+                              [errorMessage]="'Record Query Endpoint is Required'"
+                              [required]="true"
+                            >
+                            </app-app-text-input>
+                    </div>
+                    <div class="w-full md:w-1/2 px-3  md:mb-0">
+                      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Configuration Endpoint
+                        <span class="text-danger">*</span> </label>
+                      
+                  <app-app-text-input
+                              [class]="
+                                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+                              "
+                              [placeholder]="'Enter your Configuration Endpoint'"
+                              [control]="$any(encrypTionForm.get('secretKey'))"
+                              [errorMessage]="'Configuration is Required'"
+                              [required]="true"
+                            >
+                            </app-app-text-input>
+                    </div>
+                  </div>
+                  <div>
+                      <app-app-button [overRideButtonClass]="true" [disabled]="encrypTionForm.invalid" [status]="status"
+                    (buttonClick)="partnerApi()" [customClass]="
+                      'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+                    " [buttonText]="'Save Setup'"></app-app-button>
+                    </div>
+                </form>
+               
+              
+               
+                
+              </ng-container>
+              
+        </div>
+    </main>
+</div>

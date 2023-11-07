@@ -31,6 +31,8 @@ import {
   resendOTPForInstitutionSuccess,
   resetPassword,
   resetPasswordSuccess,
+  createAccount,
+  createAccountSuccess,
 } from './action';
 
 @Injectable()
@@ -80,6 +82,42 @@ export class AuthEffects {
                 res.error.error_description || res.error.errorDescription
               );
             return of();
+          })
+        );
+      })
+    );
+  });
+
+  
+  createAccount$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createAccount),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+
+        return this.authService.createAccount(action.payload).pipe(
+          map((data) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+            // read data and update message
+            return createAccountSuccess({
+              payload: data,
+            });
           })
         );
       })
@@ -232,145 +270,112 @@ export class AuthEffects {
     );
   });
 
-  resendOTP$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(resendOTP),
-      switchMap((action) => {
-        this.appStore.dispatch(
-          setAPIResponseMessage({
-            apiResponseMessage: {
-              apiResponseMessage: '',
-              isLoading: true,
-              isApiSuccessful: false,
-            },
-          })
-        );
 
-        return this.authService.resendOTP(action.email).pipe(
-          map((data) => {
-            this.appStore.dispatch(
-              setAPIResponseMessage({
-                apiResponseMessage: {
-                  apiResponseMessage: '',
-                  isLoading: false,
-                  isApiSuccessful: true,
-                },
-              })
-            );
-            // read data and update message
-            return resendOTPSuccess({
-              message: data,
-            });
-          })
-        );
-      })
-    );
-  });
+  // resendOTP$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(resendOTP),
+  //     switchMap((action) => {
+  //       this.appStore.dispatch(
+  //         setAPIResponseMessage({
+  //           apiResponseMessage: {
+  //             apiResponseMessage: '',
+  //             isLoading: true,
+  //             isApiSuccessful: false,
+  //           },
+  //         })
+  //       );
 
-  resendOTPForInstitution$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(resendOTPForInstitution),
-      switchMap((action) => {
-        this.appStore.dispatch(
-          setAPIResponseMessage({
-            apiResponseMessage: {
-              apiResponseMessage: '',
-              isLoading: true,
-              isApiSuccessful: false,
-            },
-          })
-        );
+  //       return this.authService.resendOTP(action.email).pipe(
+  //         map((data) => {
+  //           this.appStore.dispatch(
+  //             setAPIResponseMessage({
+  //               apiResponseMessage: {
+  //                 apiResponseMessage: '',
+  //                 isLoading: false,
+  //                 isApiSuccessful: true,
+  //               },
+  //             })
+  //           );
+  //           // read data and update message
+  //           return resendOTPSuccess({
+  //             message: data,
+  //           });
+  //         })
+  //       );
+  //     })
+  //   );
+  // });
 
-        return this.authService.resendOTPForInstitution(action.email).pipe(
-          map((data) => {
-            this.appStore.dispatch(
-              setAPIResponseMessage({
-                apiResponseMessage: {
-                  apiResponseMessage: '',
-                  isLoading: false,
-                  isApiSuccessful: true,
-                },
-              })
-            );
-            // read data and update message
-            return resendOTPForInstitutionSuccess({
-              message: data,
-            });
-          })
-        );
-      })
-    );
-  });
+  // resendOTPForInstitution$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(resendOTPForInstitution),
+  //     switchMap((action) => {
+  //       this.appStore.dispatch(
+  //         setAPIResponseMessage({
+  //           apiResponseMessage: {
+  //             apiResponseMessage: '',
+  //             isLoading: true,
+  //             isApiSuccessful: false,
+  //           },
+  //         })
+  //       );
 
-  activateDeactivate2FA$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(activateDeactivate2FA),
-      switchMap((action) => {
-        this.appStore.dispatch(
-          setAPIResponseMessage({
-            apiResponseMessage: {
-              apiResponseMessage: '',
-              isLoading: true,
-              isApiSuccessful: false,
-            },
-          })
-        );
+  //       return this.authService.resendOTPForInstitution(action.email).pipe(
+  //         map((data) => {
+  //           this.appStore.dispatch(
+  //             setAPIResponseMessage({
+  //               apiResponseMessage: {
+  //                 apiResponseMessage: '',
+  //                 isLoading: false,
+  //                 isApiSuccessful: true,
+  //               },
+  //             })
+  //           );
+  //           // read data and update message
+  //           return resendOTPForInstitutionSuccess({
+  //             message: data,
+  //           });
+  //         })
+  //       );
+  //     })
+  //   );
+  // });
 
-        return this.authService.activateDeactivate2FA(action.payload).pipe(
-          map((data) => {
-            this.appStore.dispatch(
-              setAPIResponseMessage({
-                apiResponseMessage: {
-                  apiResponseMessage: '',
-                  isLoading: false,
-                  isApiSuccessful: true,
-                },
-              })
-            );
-            // read data and update message
-            return activateDeactivate2FASuccess({
-              message: data,
-            });
-          })
-        );
-      })
-    );
-  });
+  // activateDeactivate2FA$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(activateDeactivate2FA),
+  //     switchMap((action) => {
+  //       this.appStore.dispatch(
+  //         setAPIResponseMessage({
+  //           apiResponseMessage: {
+  //             apiResponseMessage: '',
+  //             isLoading: true,
+  //             isApiSuccessful: false,
+  //           },
+  //         })
+  //       );
 
-  confirm2FAction$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(confirm2FAction),
-      switchMap((action) => {
-        this.appStore.dispatch(
-          setAPIResponseMessage({
-            apiResponseMessage: {
-              apiResponseMessage: '',
-              isLoading: true,
-              isApiSuccessful: false,
-            },
-          })
-        );
+  //       return this.authService.activateDeactivate2FA(action.payload).pipe(
+  //         map((data) => {
+  //           this.appStore.dispatch(
+  //             setAPIResponseMessage({
+  //               apiResponseMessage: {
+  //                 apiResponseMessage: '',
+  //                 isLoading: false,
+  //                 isApiSuccessful: true,
+  //               },
+  //             })
+  //           );
+  //           // read data and update message
+  //           return activateDeactivate2FASuccess({
+  //             message: data,
+  //           });
+  //         })
+  //       );
+  //     })
+  //   );
+  // });
 
-        return this.authService.confirm2FAction(action.email).pipe(
-          map((data) => {
-            this.appStore.dispatch(
-              setAPIResponseMessage({
-                apiResponseMessage: {
-                  apiResponseMessage: '',
-                  isLoading: false,
-                  isApiSuccessful: true,
-                },
-              })
-            );
-            // read data and update message
-            return confirm2FActionSuccess({
-              message: data,
-            });
-          })
-        );
-      })
-    );
-  });
 
   // resetPassword$ = createEffect(() => {
   //   return this.actions$.pipe(

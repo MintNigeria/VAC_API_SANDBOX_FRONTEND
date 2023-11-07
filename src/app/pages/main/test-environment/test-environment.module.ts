@@ -12,6 +12,7 @@ import { ResponseParameterComponent } from './tabs/response-parameter/response-p
 import { SystemRequestParameterComponent } from './tabs/system-request-parameter/system-request-parameter.component';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/app-text-input.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     TestEnvironmentRoutingModule,
     AppSidebarComponent,
     AppButtonComponent,
+    AppTextInputComponent,
     ReactiveFormsModule,
     FormsModule,
     ConfirmSuccessModalComponent,

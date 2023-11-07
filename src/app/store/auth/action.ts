@@ -10,6 +10,15 @@ export const loginSuccess = createAction(
   '[Login User] Login Success',
   props<{ accessToken: string }>()
 );
+export const createAccount = createAction(
+  '[Create Account] Create new account',
+  props<{ payload: any }>()
+);
+
+export const createAccountSuccess = createAction(
+  '[Create Account] Create new account Success',
+  props<{ payload: any }>()
+);
 
 // reset password
 export const changePasswordUser = createAction(

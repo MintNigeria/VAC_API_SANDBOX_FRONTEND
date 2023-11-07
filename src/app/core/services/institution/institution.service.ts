@@ -63,57 +63,12 @@ export class InstitutionService
     );
   }
 
-  updatedInstitution(payload: any, id: any) {
-    const body = new FormData()
-    body.append('LgaId', payload.lga)
-    body.append('StateId', payload.state)
-    body.append('Address', payload.address)
-    body.append('PhoneNumber', payload.phone)
-    body.append('Logo', payload.logo)
-    body.append('imei', payload.imei)
-    body.append('serialNumber', payload.serialNumber)
-    body.append('device', payload.device)
-    body.append('ipAddress', payload.ipAddress)
-    return this.http.put<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Institution/UpdateInstitution/${id}`, body
-    );
-  }
-
-  ValidateRegistrationCode(payload: any) {
-    return this.http.post<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Institution/ValidateRegistrationCode`, payload
-    );
-  }
-
-  
-
-  getAllInstitutionBody() {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/InstitutionBody/GetAllInstitutionBodies`
-    );
-  }
-  getAllInstitutionType() {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/InstitutionType/GetAllInstitutionTypes`
-    );
-  }
-  getAllInstitutionTypeLinkedToBody(id: any) {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/InstitutionType/GetAllInstitutionTypesLinkedToInstitutionBody/${id}`
-    );
-  }
-
-  getAllInstitutionSector() {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Sector/GetAllInstitutionSector`
-    );
-  }
-
   getAllInstitutionsDropdown(params?: any) {
     return this.http.get<any>(
       `${this.baseUrl}mint-higherinstitution/api/v1/Institution/DropDown`, {params}
     );
   }
+
 
   getAllInstitutionsRecordsAllNames() {
     return this.http.get<any>(
@@ -121,34 +76,7 @@ export class InstitutionService
     );
   }
 
-  getAllInstitutionGrade(payload: any) {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Grades/GetAllIGrades`, {params: payload}
-    );
-  }
-
-  getAllInstitutionDegreeType(payload: any) {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/DegreeType/GetAllIDegreeTypes`, {params: payload}
-    );
-  }
-  getFacultyAndDepartmentByInstitutionName(payload: any) {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Institution/FacultiesAndDepartmentsByInstitutionName`, {params: payload}
-    );
-  }
-
-  createDegreeType(payload: any) {
-    return this.http.post<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/DegreeType/CreateDegreeType`, payload
-    );
-  }
-
-  updateDegreeType(payload: any) {
-    return this.http.put<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/DegreeType/UpdateDegreeType`, payload
-    );
-  }
+ 
 
   createGrade(payload: any) {
     return this.http.post<any>(

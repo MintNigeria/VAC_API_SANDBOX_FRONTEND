@@ -18,9 +18,10 @@ import { PartnerAPIComponent } from './homepage/partner-api/partner-api.componen
 import { SystemAPIComponent } from './homepage/system-api/system-api.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ApiConfiguratiosnComponent } from './api-configuratiosn/api-configuratiosn.component';
 
 @NgModule({
-  declarations: [MainComponent, SupportComponent],
+  declarations: [MainComponent, SupportComponent, ApiConfiguratiosnComponent],
   imports: [
     CommonModule,
     SharedModule,

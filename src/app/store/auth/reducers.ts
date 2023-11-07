@@ -3,6 +3,7 @@ import {
   activateDeactivate2FASuccess,
   changePasswordSuccess,
   confirm2FActionSuccess,
+  createAccountSuccess,
   createPasswordSuccess,
   getUserProfileSuccess,
   loginSuccess,
@@ -22,6 +23,7 @@ const initialState: IAuthStateInterface = {
   permissions: storage.getItem('auth') ? storage.getItem('auth').permissions : null,
   message: '',
   basicProfile: null,
+  newAccount: null
 };
 
 export const authReducers = createReducer(
@@ -45,6 +47,12 @@ export const authReducers = createReducer(
       },
       permissions: decodedToken.Permission
 
+    };
+  }),
+  on(createAccountSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      newAccount: payload,
     };
   }),
   on(changePasswordSuccess, (state, { message }) => {

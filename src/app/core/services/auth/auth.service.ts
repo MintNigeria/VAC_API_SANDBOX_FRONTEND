@@ -8,7 +8,6 @@ abstract class AbstractAuthService {
   abstract login(data: ILogin): Observable<any>;
   abstract changePassword(payload: IChangePassword): Observable<any>;
   abstract forgotPassword(email: string): Observable<any>;
-  abstract sendTwoFactorCode(email: string): Observable<any>;
 }
 
 @Injectable({
@@ -85,40 +84,15 @@ export class AuthService extends BaseURI implements AbstractAuthService {
       `${this.baseUrl}mint-auth/api/v1/Authentication/RequestPasswordReset`, body
     );
   }
+  createAccount(payload: any) {
+    
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/Partner/RegisterPartner`, payload
+    );
+  }
+
   
-  sendTwoFactorCode(email: string) {
-    return this.http.get<any>(
-      `${this.baseUrl}mint-auth/api/v1/authentication/ForgetPassword/${email}`
-    );
-  }
 
-  resendOTP(email: string) {
-    const body = new FormData()
-    body.append('email', email)
-    return this.http.post<any>(
-      `${this.baseUrl}mint-auth/api/v1/Authentication/RequestEmailVerification/`, body
-    );
-  }
-
-  resendOTPForInstitution(email: string) {
-    // const body = new FormData()
-    // body.append('email', email)
-    return this.http.post<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Institution/GenerateCodeForInstitutionRegistration/`, email
-    );
-  }
-
-  activateDeactivate2FA(payload: any) {
-    return this.http.post<any>(
-      `${this.baseUrl}mint-auth/api/v1/Authentication/EnableTwoFactor/`, payload
-    );
-  }
-
-  confirm2FAction(email: string) {
-    return this.http.post<any>(
-      `${this.baseUrl}mint-auth/api/v1/Authentication/SendTwoFactorCode/${email}`, {}
-    );
-  }
 
   logOut(payload: any) {
     return this.http

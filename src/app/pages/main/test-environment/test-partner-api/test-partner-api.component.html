@@ -14,20 +14,7 @@
   </p>
 </div>
 <div>
-  <div class="mt-4 grid gap-4 md:grid-cols-[1fr_auto]">
-    <div class="grid grid-cols-[auto_1fr]">
-      <label
-        class="text-base font-medium text-[#101828] bg-white px-[14px] py-[10px] rounded-l-lg border border-solid border-[#D0D5DD]"
-        for="partner api endpoint">Partner API Endpoint</label>
-      <input [class]="
-          ' placeholder:text-[#667085] text-black bg-white block pl-[20px] pr-[60px] border border-solid border-l-0 border-[#D0D5DD] outline-0 rounded-r-[8px] py-3'
-        " [placeholder]="'Enter partner api endpoint'" name="{{activeTab?.apiUrl}}" [(ngModel)]="activeTab.apiUrl">
-    </div>
-    <app-app-button [overRideButtonClass]="true" [disabled]="activeTab.apiUrl === ''" [status]="status"
-      (buttonClick)="partnerApi()" [customClass]="
-        'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
-      " [buttonText]="'Run API Test'"></app-app-button>
-  </div>
+ 
 
   <div class="border-b-2 mt-8 flex items-center justify-between">
     <div>
@@ -40,5 +27,11 @@
   </div>
   <div class="my-11">
     <app-editor></app-editor>
+  </div>
+  <div>
+    <app-app-button [overRideButtonClass]="true" [disabled]="encrypTionForm.invalid" [status]="status"
+  (buttonClick)="partnerApi()" [customClass]="
+    'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+  " [buttonText]="'Save Setup'"></app-app-button>
   </div>
 </div>

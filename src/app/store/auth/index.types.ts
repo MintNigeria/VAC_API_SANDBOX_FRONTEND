@@ -48,6 +48,7 @@ export interface IAuthStateInterface {
   message?: string | null;
 
   permissions?: string | null;
+  newAccount?: any;
 
   basicProfile?: IUser | null;
 }

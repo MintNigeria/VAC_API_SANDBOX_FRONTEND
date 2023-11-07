@@ -11,11 +11,15 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { reducers, metaReducers } from './types/appState.interface';
 import { appReducer } from './store/shared/app.reducer';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { LoaderInterceptor } from './core/interceptors/http-loader.interceptor';
+import { AuthInterceptor } from './core/interceptors/http.interceptor';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MonacoEditorModule.forRoot(),
     StoreModule.forRoot({}),
     StoreModule.forFeature('apiResponse', appReducer),
@@ -35,7 +39,17 @@ import { appReducer } from './store/shared/app.reducer';
     }),
     AppRoutingModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],  bootstrap: [AppComponent],
 })
 export class AppModule {}
