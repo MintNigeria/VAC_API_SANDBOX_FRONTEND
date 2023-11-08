@@ -12,10 +12,10 @@ import { EffectsModule } from '@ngrx/effects';
   declarations: [],
   imports: [
     CommonModule,
-        AppTextInputComponent,
+    AppTextInputComponent,
     ApiConfiguratiosnRoutingModule,
     StoreModule.forFeature('security', securityReducer),
     EffectsModule.forFeature([SecurityEffects]),
-  ]
+  ],
 })
-export class ApiConfiguratiosnModule { }
+export class ApiConfiguratiosnModule {}

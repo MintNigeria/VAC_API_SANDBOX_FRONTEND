@@ -5,7 +5,6 @@ export interface ISetupEncryptionAndDecryption {
   ivKey: string;
   secretKey: string;
 }
-
 export interface IPartnerAPI {
   id: number;
   recordQueryEndpoint: string;
@@ -13,6 +12,6 @@ export interface IPartnerAPI {
 }
 
 export interface ISecurityStateInterface {
-  setupEncryptionAndDecryption: ISetupEncryptionAndDecryption | null;
+encryptionData: ISetupEncryptionAndDecryption | null;
   partnerAPI: IPartnerAPI | null;
 }

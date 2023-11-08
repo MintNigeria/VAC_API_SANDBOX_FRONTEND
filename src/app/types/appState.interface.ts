@@ -27,7 +27,7 @@ export interface AppStateInterface {
   graduates: GraduatesStateInterface,
   // auditLog : AuditLogStateInterface
   institutions: IInstitutionStateInterface;
-  setupEncryptionAndDecryption: ISecurityStateInterface;
+  encryptionData: ISecurityStateInterface;
 
 }
 
@@ -45,9 +45,7 @@ export const reducers: ActionReducerMap<AppStateInterface> = {
   apiResponse: fromShared.appReducer,
   institutions: fromInstitutions.institutionReducers,
   graduates: fromGraduates.graduatesReducer,
-  setupEncryptionAndDecryption: fromSecurity.securityReducer
-
-
+  encryptionData: fromSecurity.securityReducer
 
 };
 
