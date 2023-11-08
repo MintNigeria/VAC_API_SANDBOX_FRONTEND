@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ApiConfiguratiosnComponent } from './api-configuratiosn/api-configuratiosn.component';
 
+
 @NgModule({
   declarations: [MainComponent, SupportComponent, ApiConfiguratiosnComponent],
   imports: [
@@ -34,6 +35,7 @@ import { ApiConfiguratiosnComponent } from './api-configuratiosn/api-configurati
     AppSelectComponent,
     AppButtonComponent,
     ConfirmSuccessModalComponent,
+   
   ],
 })
 export class MainModule {}
