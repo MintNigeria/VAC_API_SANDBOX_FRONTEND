@@ -7,7 +7,7 @@ import { NotificationsService } from 'src/app/core/services/shared/notifications
 import { StorageService } from 'src/app/core/services/shared/storage.service';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { setAPIResponseMessage } from '../shared/app.action';
-import { getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess } from './action';
+import { getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption } from './action';
 
 
 
@@ -38,6 +38,43 @@ export class InstitutionEffects {
         );
         
         return this.institutionService.getAllInstitutionsDropdown(action.payload)
+          .pipe(
+            map((data) => {
+              this.appStore.dispatch(
+                setAPIResponseMessage({
+                  apiResponseMessage: {
+                    apiResponseMessage: '',
+                    isLoading: false,
+                    isApiSuccessful: true,
+                  },
+                })
+              );
+              // read data and update payload
+              return getAllInstitutionsDropdownSuccess({
+                payload: data.payload
+                  
+              });
+            })
+          );
+      })
+    );
+  });
+
+  getEncryptionAndDecryption$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(getEncryptionAndDecryption),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+        
+        return this.institutionService.getEncryptionKeysWithInstitutionId(action.id)
           .pipe(
             map((data) => {
               this.appStore.dispatch(

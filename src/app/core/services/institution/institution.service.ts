@@ -69,6 +69,23 @@ export class InstitutionService
     );
   }
 
+  getEncryptionKeysWithInstitutionId(institutionId: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/GetEncryptionKeysWithInstitutionId/${institutionId}`
+    );
+  }
+
+  createOrUpdateInstitutionEncryptionKeys(
+    institutionId: string | number,
+    payload: any
+  ) : Observable<any>{
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/CrearOrUpdateInstitutionEncryptionKeys/${institutionId}`,
+      payload
+    );
+  }
+
+
 
   getAllInstitutionsRecordsAllNames() {
     return this.http.get<any>(

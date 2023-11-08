@@ -14,12 +14,14 @@ import { appReducer } from './store/shared/app.reducer';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoaderInterceptor } from './core/interceptors/http-loader.interceptor';
 import { AuthInterceptor } from './core/interceptors/http.interceptor';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    SharedModule,
     MonacoEditorModule.forRoot(),
     StoreModule.forRoot({}),
     StoreModule.forFeature('apiResponse', appReducer),
