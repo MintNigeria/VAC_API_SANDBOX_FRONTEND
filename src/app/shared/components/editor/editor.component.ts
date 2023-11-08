@@ -12,9 +12,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
-  // @Input() control: FormControl = new FormControl()
-  editorOptions = {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'javascript', readOnly: true};
-  code: string= `{
+  @Input() code: string = `{
     firstName: string
     lastName: string
     middleName: string
@@ -32,8 +30,10 @@ export class EditorComponent implements OnInit {
     }
     gender: string
     dateOfBirth: string
-  }
-`;
+  }`;
+  editorOptions = {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'javascript', readOnly: true};
+//   code: string= `
+// `;
 
   ngOnInit(): void {}
 }

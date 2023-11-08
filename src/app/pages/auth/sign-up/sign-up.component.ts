@@ -72,7 +72,17 @@ export class SignUpComponent implements OnInit {
     });
   }
   signUpButton() {
-    this.store.dispatch(createAccount({payload: this.signUp.value}));
+    const {lastName, firstName, phoneNumber, email, password, institutionId, institutionName} = this.signUp.value
+    const payload = {
+      lastName,
+      firstName,
+      phoneNumber: String(phoneNumber),
+      email,
+      password,
+      institutionId,
+      institutionName
+    }
+    this.store.dispatch(createAccount({payload}));
     this.actions$.pipe(ofType(createAccountSuccess)).subscribe((res: any) => {
       console.log(res)
       if (res) {

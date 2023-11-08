@@ -7,26 +7,71 @@
   </p>
 </div>
 
-<form class="mt-4 grid gap-4 md:grid-cols-[1fr_auto]" [formGroup]="apiUrl">
-  <div class="grid grid-cols-[auto_1fr]">
-    <label
-      class="text-base font-medium text-[#101828] bg-white px-[14px] py-[10px] rounded-l-lg border border-solid border-[#D0D5DD]"
-      for="partner api endpoint">VAC System API Endpoint</label>
-    <input [class]="
-        ' placeholder:text-[#667085] text-black bg-white block pl-[20px] pr-[60px] border border-solid border-l-0 border-[#D0D5DD] outline-0 rounded-r-[8px] py-3'
-      " [placeholder]="'Enter partner api endpoint'" [formControl]="$any(apiUrl.get('partnerApiEndpoint'))" />
+<form [formGroup]="vacApiSetupForm">
+              
+  <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0 mb-6">
+    <div class="w-full md:w-1/2 px-3  md:mb-0">
+      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Faculty
+        <span class="text-danger">*</span> </label>
+      <app-app-text-input
+              [class]="
+                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+              "
+              [placeholder]="'Faculty'"
+              [control]="$any(vacApiSetupForm.get('facultyId'))"
+              [errorMessage]="'Faculty is Required'"
+              [required]="true"
+            >
+            </app-app-text-input>
+    </div>
+    <div class="w-full md:w-1/2 px-3  md:mb-0">
+      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Department
+        <span class="text-danger">*</span> </label>
+      
+  <app-app-text-input
+              [class]="
+                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+              "
+              [placeholder]="'Enter your Department'"
+              [control]="$any(vacApiSetupForm.get('departmentId'))"
+              [errorMessage]="'Department is Required'"
+              [required]="true"
+            >
+            </app-app-text-input>
+    </div>
   </div>
-  <app-app-button [overRideButtonClass]="true" (buttonClick)="partnerApi()" [customClass]="
-      'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
-    " [buttonText]="'Copy API'"></app-app-button>
+  <div class="flex flex-wrap -mx-2 space-y-4 md:space-y-0 mb-6">
+    <div class="w-full md:w-1/2 px-3  md:mb-0">
+      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Degree type
+        <span class="text-danger">*</span> </label>
+      <app-app-text-input
+              [class]="
+                ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
+              "
+              [placeholder]="'Enter your Degree Type'"
+              [control]="$any(vacApiSetupForm.get('degreeTypeId'))"
+              [errorMessage]="'Degree type is Required'"
+              [required]="true"
+            >
+            </app-app-text-input>
+    </div>
+    <div class="w-full md:w-1/2 px-3  md:mb-0">
+      <label for="secretkey" class="text-base text-[#6E7A91] mb-2">Year of Graduation
+        <span class="text-danger">*</span> </label>
+      
+        <ng-select class=""
+        formControlName="yearOfGraduation"
+        [selectOnTab]="true"
+        placeholder="Select year of graduation"
+
+        >
+        <ng-option *ngFor="let unit of years" [value]="unit">{{unit}}</ng-option>
+    </ng-select>
+    </div>
+  </div>
+ 
 </form>
 
-<div class="border-b-2 mb-3 mt-8">
-  <h3 class="text-lg font-medium text-[#101828]">API Test Results</h3>
-  <p class="text-[#475467] mb-4">
-    The tested API results will be displayed below:
-  </p>
-</div>
 <div class="flex items-center mb-4 gap-6">
   <p class="cursor-pointer" routerLink="/main/test-environment/test-system-API/system-request-parameter" routerLinkActive
     #activeLink="routerLinkActive" [ngClass]="activeLink.isActive ? 'active' : 'text-[#667085] font-medium'">
@@ -37,13 +82,13 @@
     API Response Parameter
   </p>
 </div>
-<router-outlet></router-outlet>
-<div class="flex items-center gap-8 mt-8">
-  <p class="font-medium text-[#101828]">
-    Do you want to request for Live Production URL to Migrate Data?
-  </p>
-
-  <app-app-button [overRideButtonClass]="true" (buttonClick)="requestUrl()" [customClass]="
-      'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
-    " [buttonText]="'Yes, Request for Live URL'"></app-app-button>
+<div>
+  <app-editor [code]="codeStructure"></app-editor>
+</div>
+<!-- <router-outlet></router-outlet> -->
+<div class="mt-4">
+  <app-app-button [overRideButtonClass]="true" [disabled]="vacApiSetupForm.invalid" [status]="status"
+(buttonClick)="partnerApi()" [customClass]="
+  'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+" [buttonText]="'Submit'"></app-app-button>
 </div>

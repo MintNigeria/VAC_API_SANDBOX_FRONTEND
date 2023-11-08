@@ -13,6 +13,7 @@ import { SystemRequestParameterComponent } from './tabs/system-request-parameter
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/app-text-input.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AppTextInputComponent } from 'src/app/shared/components/app-text-input/
     FormsModule,
     ConfirmSuccessModalComponent,
     SharedModule,
+    NgSelectModule,
   ],
 })
 export class TestEnvironmentModule {}
