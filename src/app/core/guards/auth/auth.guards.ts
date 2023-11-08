@@ -14,16 +14,19 @@ import { StorageService } from '../../services/shared/storage.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
+  loggedInUser: any;
+
   constructor(private router: Router, private storageService: StorageService) {}
   canActivate():
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const authenticationToken: string | undefined =
-      this.storageService.getItem('token');
+      const authenticationToken: any = localStorage.getItem('token');
     const helper = new JwtHelperService();
-    if (!authenticationToken) {
+    this.loggedInUser = helper.decodeToken(authenticationToken);
+
+    if (this.loggedInUser.UserType !== 'Sandbox') {
       this.router.navigate(['/']);
       return false;
     }

@@ -1,13 +1,12 @@
 import { createAction, props } from "@ngrx/store";
-import { ISetupEncryptionAndDecryption } from "./types/index.types";
 
-export const setupEncryptionAndDecryption = createAction(
-    '[get encryption] setup encryption and decryption',
+export const getEncryptionAndDecryption = createAction(
+    '[get encryption] get encryption and decryption',
     props<{ id:any}>()
 );
 
-export const setupEncryptionAndDecryptionSuccess = createAction(
-    '[get encryption] setup encryption and decryption success',
+export const getEncryptionAndDecryptionSuccess = createAction(
+    '[get encryption] get encryption and decryption success',
     props<{payload: any}>()
 );
 

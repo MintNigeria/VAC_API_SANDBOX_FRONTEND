@@ -1,20 +1,17 @@
 <div class="layout">
     <aside>
-        <app-app-sidebar [routes]="[
-          {
-            routeName: 'Integrate VAC System’s API',
-            routePath: '/main/test-environment/test-system-API'
-          },
-          {
-            routeName: 'VAC system Integrates partners’ API',
-            routePath: '/main/test-environment/test-partner-API'
-          },
-          {
-            routeName: 'Security Setup',
-            routePath: '/main/api-configuration'
-          },
-        ]">
-        </app-app-sidebar>
+      <app-app-sidebar [routes]="[
+      {
+        routeName: 'VAC system Integrates partners’ API',
+        routePath: '/main/test-environment/test-partner-API',
+        exact: true
+      },
+      {
+        routeName: 'Security Setup',
+        routePath: '/main/api-configuration'
+      },
+    ]">
+    </app-app-sidebar>
     </aside>
     <main>
         <div class="max-w-screen-xl mx-auto">

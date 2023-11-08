@@ -11,7 +11,7 @@ export class TestEnvironmentService extends BaseURI {
     super();
   }
 
-  getEncryptionKeysWithInstitutionId(institutionId: string | number): Observable<any> {
+  getEncryptionKeysWithInstitutionId(institutionId: string): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}InstitutionEncryption/GetEncryptionKeysWithInstitutionId/${institutionId}`
     );

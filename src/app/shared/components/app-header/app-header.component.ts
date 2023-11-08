@@ -14,7 +14,8 @@ import { ConfirmSuccessModalComponent } from '../../modals/confirm-success-modal
 export class AppHeaderComponent implements OnInit {
   showAccount : boolean = false
   constructor(
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +31,11 @@ export class AppHeaderComponent implements OnInit {
       },
       panelClass: 'custom-class',
 
+    }).afterClosed().subscribe((res: any) => {
+      console.log(res)
+      if (res === true) {
+        this.router.navigateByUrl('/')
+      }
     })
   }
 }

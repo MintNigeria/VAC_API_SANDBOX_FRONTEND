@@ -3,9 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { EditorComponent } from './components/editor/editor.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 const components: any[] = [
-EditorComponent
+EditorComponent,
+AlertComponent,
+LoaderComponent
 ]
 
 

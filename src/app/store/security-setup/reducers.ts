@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { ISecurityStateInterface } from './types/index.types';
 import {
   createEncryptionAndDecryptionSuccess,
-  setupEncryptionAndDecryptionSuccess,
+  getEncryptionAndDecryptionSuccess,
 } from './action';
 
 const initialState: ISecurityStateInterface = {
@@ -17,12 +17,12 @@ encryptionData: null,
   partnerAPI: null,
 };
 
-export const securityReducer = createReducer(
+export const securityReducers = createReducer(
   initialState,
-  on(setupEncryptionAndDecryptionSuccess, (state, { payload }) => {
+  on(getEncryptionAndDecryptionSuccess, (state, { payload }) => {
     return {
       ...state,
-      setupEncryptionAndDecryption: payload,
+      encryptionData: payload,
     };
   }),
   on(createEncryptionAndDecryptionSuccess, (state, { payload }) => {

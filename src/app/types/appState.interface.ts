@@ -4,7 +4,7 @@ import * as fromAuth from '../store/auth/reducers';
 import * as fromShared from '../store/shared/app.reducer';
 import * as fromGraduates from '../store/graduates/reducers'
 import * as fromInstitutions from '../store/institution/reducers';
-import * as fromSecurity from '../store/security-setup/reducer'
+import * as fromSecurity from '../store/security-setup/reducers'
 
 
 import {
@@ -27,7 +27,7 @@ export interface AppStateInterface {
   graduates: GraduatesStateInterface,
   // auditLog : AuditLogStateInterface
   institutions: IInstitutionStateInterface;
-  encryptionData: ISecurityStateInterface;
+  security: ISecurityStateInterface;
 
 }
 
@@ -45,7 +45,7 @@ export const reducers: ActionReducerMap<AppStateInterface> = {
   apiResponse: fromShared.appReducer,
   institutions: fromInstitutions.institutionReducers,
   graduates: fromGraduates.graduatesReducer,
-  encryptionData: fromSecurity.securityReducer
+  security: fromSecurity.securityReducers
 
 };
 

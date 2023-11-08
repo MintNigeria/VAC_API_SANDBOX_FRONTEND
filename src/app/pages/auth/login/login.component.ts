@@ -9,8 +9,8 @@ import {
   EnterExitLeft,
   EnterFromTop,
 } from 'src/app/animations/animations';
-import { NotificationsService } from 'src/app/core/services/notifications.service';
-import { invokeLoginUser, loginSuccess } from 'src/app/store/auth/action';
+import { NotificationsService } from 'src/app/core/services/shared/notifications.service';
+import { invokeLoginUser, loginSuccess, logoutAction } from 'src/app/store/auth/action';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
 
@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initLoginForm(); 
+    this.store.dispatch(logoutAction());
+
   }
 
   clearInput(controlName: string) {
@@ -70,6 +72,7 @@ export class LoginComponent implements OnInit {
             lastName: this.loggedInUser.family_name,
             email: this.loggedInUser.email,
             id: this.loggedInUser.id,
+            institutionId: this.loggedInUser.InstitutionId,
             lastLogin: this.loggedInUser.last_login_time,
             name: this.loggedInUser.name,
             phoneNumber: this.loggedInUser.phone_number,
@@ -79,12 +82,12 @@ export class LoginComponent implements OnInit {
     
         };
         
-        if (this.loggedInUser.UserType === 'Graduates') {
+        if (this.loggedInUser.UserType === 'Sandbox') {
           localStorage.setItem('userData', JSON.stringify(this.loggedInUser));
           localStorage.setItem('authData', JSON.stringify(data));
           this.notificationService.publishMessages('success', 'Login Successful');
           this.router.navigateByUrl("/main")
-        }  else if (this.loggedInUser.UserType !== 'Graduates') {
+        }  else if (this.loggedInUser.UserType !== 'Sandbox') {
           this.notificationService.publishMessages('error', 'Invalid login credential');
           // localStorage.clear()
         }

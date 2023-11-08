@@ -12,6 +12,6 @@ export interface IPartnerAPI {
 }
 
 export interface ISecurityStateInterface {
-encryptionData: ISetupEncryptionAndDecryption | null;
+encryptionData: any;
   partnerAPI: IPartnerAPI | null;
 }

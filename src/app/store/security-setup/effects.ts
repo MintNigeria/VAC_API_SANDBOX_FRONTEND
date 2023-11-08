@@ -3,21 +3,21 @@ import { Store } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { TestEnvironmentService } from 'src/app/core/services/test-environment/test-environment.service';
-import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, setupEncryptionAndDecryption, setupEncryptionAndDecryptionSuccess } from './action';
+import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess } from './action';
 import { switchMap,map } from 'rxjs';
 import { setAPIResponseMessage } from '../shared/app.action';
 
 @Injectable()
 export class SecurityEffects {
   constructor(
-    private action$: Actions,
+    private actions$: Actions,
     private appStore: Store<AppResponseInterface>,
     private testEnviromentService: TestEnvironmentService
   ) {}
 
   getEncryptionDetails$ = createEffect(() => {
-    return this.action$.pipe(
-      ofType(setupEncryptionAndDecryption),
+    return this.actions$.pipe(
+      ofType(getEncryptionAndDecryption),
       switchMap((action) => {
         this.appStore.dispatch(
           setAPIResponseMessage({
@@ -28,7 +28,7 @@ export class SecurityEffects {
             },
           })
         );
-        
+        console.log(action)
         const {id} = action;
         return this.testEnviromentService
           .getEncryptionKeysWithInstitutionId(id).pipe(
@@ -43,7 +43,7 @@ export class SecurityEffects {
             })
             );
               // read data and update payload
-              return setupEncryptionAndDecryptionSuccess({
+              return getEncryptionAndDecryptionSuccess({
                 payload: data.payload
             });
             })
@@ -53,7 +53,7 @@ export class SecurityEffects {
   });
 
   CreateEncryptionDetails$ = createEffect(() => {
-    return this.action$.pipe(
+    return this.actions$.pipe(
       ofType(createEncryptionAndDecryption),
       switchMap((action) => {
         this.appStore.dispatch(

@@ -65,9 +65,26 @@ export class InstitutionService
 
   getAllInstitutionsDropdown(params?: any) {
     return this.http.get<any>(
-      `${this.baseUrl}mint-higherinstitution/api/v1/Institution/DropDown`, {params}
+      `${this.baseUrl2}mint-higherinstitution/api/v1/Institution/DropDown`, {params}
     );
   }
+
+  getEncryptionKeysWithInstitutionId(institutionId: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/GetEncryptionKeysWithInstitutionId/${institutionId}`
+    );
+  }
+
+  createOrUpdateInstitutionEncryptionKeys(
+    institutionId: string | number,
+    payload: any
+  ) : Observable<any>{
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/CrearOrUpdateInstitutionEncryptionKeys/${institutionId}`,
+      payload
+    );
+  }
+
 
 
   getAllInstitutionsRecordsAllNames() {
