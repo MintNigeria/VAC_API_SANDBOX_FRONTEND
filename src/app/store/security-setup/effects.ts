@@ -15,7 +15,7 @@ export class SecurityEffects {
     private testEnviromentService: TestEnvironmentService
   ) {}
 
-  getEncryptionDetails$ = createEffect(() => {
+  getEncryptionAndDecryption$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(getEncryptionAndDecryption),
       switchMap((action) => {
@@ -28,10 +28,9 @@ export class SecurityEffects {
             },
           })
         );
-        console.log(action)
-        const {id} = action;
-        return this.testEnviromentService
-          .getEncryptionKeysWithInstitutionId(id).pipe(
+        
+        return this.testEnviromentService.getEncryptionKeysWithInstitutionId(action.id)
+          .pipe(
             map((data) => {
               this.appStore.dispatch(
                 setAPIResponseMessage({
@@ -39,19 +38,19 @@ export class SecurityEffects {
                     apiResponseMessage: '',
                     isLoading: false,
                     isApiSuccessful: true,
-                },
-            })
-            );
+                  },
+                })
+              );
               // read data and update payload
               return getEncryptionAndDecryptionSuccess({
                 payload: data.payload
-            });
+                  
+              });
             })
           );
       })
     );
   });
-
   CreateEncryptionDetails$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(createEncryptionAndDecryption),
@@ -66,8 +65,8 @@ export class SecurityEffects {
           })
         );
       
-        const {payload, id } = action;
-        return this.testEnviromentService.createOrUpdateInstitutionEncryptionKeys(payload, id).pipe(
+        const {id, payload } = action;
+        return this.testEnviromentService.createOrUpdateInstitutionEncryptionKeys(id, payload).pipe(
           map((data: any) => {
             this.appStore.dispatch(
               setAPIResponseMessage({

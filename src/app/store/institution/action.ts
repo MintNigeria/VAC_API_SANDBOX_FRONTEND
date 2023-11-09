@@ -29,3 +29,25 @@ export const createEncryptionAndDecryptionSuccess = createAction(
   '[create decryption] create encryption and decryption success',
   props<{payload: any}>()
 );
+
+export const updatePartnerAPI = createAction(
+  '[update partner api] update partner API',
+  props<{id: any}>()
+
+);
+
+export const updatePartnerAPISuccess = createAction(
+  '[update partner api] integrate partner API success',
+  props<{payload: any}>()
+)
+
+export const createPartnerAPI = createAction(
+  '[update partner api] update partner API',
+  props<{id: any, payload: any}>()
+
+);
+
+export const createPartnerAPISuccess = createAction(
+  '[update partner api] integrate partner API success',
+  props<{payload: any}>()
+)

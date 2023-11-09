@@ -2,7 +2,7 @@ import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IInstitutionStateInterface } from './types/index.type';
 
 import * as storage from '../storage';
-import { getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess } from './action';
+import { createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, updatePartnerAPISuccess } from './action';
 
 const initialState: IInstitutionStateInterface = {
   dropdown: null,
@@ -18,6 +18,24 @@ export const institutionReducers = createReducer(
     };
   }),
   on(getEncryptionAndDecryptionSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      dropdown : payload
+    };
+  }),
+  on(createEncryptionAndDecryptionSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      dropdown : payload
+    };
+  }),
+  on(updatePartnerAPISuccess, (state, { payload }) => {
+    return {
+      ...state,
+      dropdown : payload
+    };
+  }),
+  on(createPartnerAPISuccess, (state, { payload }) => {
     return {
       ...state,
       dropdown : payload

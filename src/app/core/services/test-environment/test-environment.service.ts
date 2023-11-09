@@ -22,7 +22,7 @@ export class TestEnvironmentService extends BaseURI {
     payload: any
   ) : Observable<any>{
     return this.http.post<any>(
-      `${this.baseUrl}InstitutionEncryption/CrearOrUpdateInstitutionEncryptionKeys/${institutionId}`,
+      `${this.baseUrl}InstitutionEncryption/CreateOrUpdateInstitutionEncryptionKeys`,
       payload
     );
   }

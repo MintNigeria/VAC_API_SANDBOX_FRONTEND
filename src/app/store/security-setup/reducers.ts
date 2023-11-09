@@ -6,13 +6,6 @@ import {
 } from './action';
 
 const initialState: ISecurityStateInterface = {
-//   setupEncryptionAndDecryption: {
-//     id: '',
-//     institutionId: '',
-//     institutionName: '',
-//     ivKey: '',
-//     secretKey: '',
-//   },
 encryptionData: null,
   partnerAPI: null,
 };
@@ -28,7 +21,7 @@ export const securityReducers = createReducer(
   on(createEncryptionAndDecryptionSuccess, (state, { payload }) => {
     return {
       ...state,
-      setupEncryptionAndDecryption: payload,
+      encryptionData: payload,
     };
   })
 );

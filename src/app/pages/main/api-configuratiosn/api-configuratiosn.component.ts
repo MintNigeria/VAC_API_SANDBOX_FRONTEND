@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store, select } from '@ngrx/store';
+import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { TestEnvironmentService } from 'src/app/core/services/test-environment/test-environment.service';
-import { getEncryptionAndDecryption } from 'src/app/store/institution/action';
+import { createEncryptionAndDecryption, createPartnerAPI, getEncryptionAndDecryption, updatePartnerAPI } from 'src/app/store/institution/action';
 import { securitySelector } from 'src/app/store/security-setup/selector';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
@@ -15,9 +16,10 @@ import { Status } from 'src/app/types/shared.types';
 })
 export class ApiConfiguratiosnComponent implements OnInit {
   security$ = this.appStore.pipe(select(securitySelector));
-  id: string = '';
+  userId: any = '';
 
   encrypTionForm!: FormGroup;
+  integrateAPIForm!: FormGroup;
   mockData = [
     {
       tabName: 'Setup Encyrption & Decryption ',
@@ -39,26 +41,39 @@ export class ApiConfiguratiosnComponent implements OnInit {
     private matDialog: MatDialog,
     private store: Store,
     private appStore: Store<AppStateInterface>,
-    private service: TestEnvironmentService
+    private service: InstitutionService
   ) {}
 
   ngOnInit(): void {
-
-    const data: any = localStorage.getItem('authData')
-    this.user = JSON.parse(data)
-
-    this.store.dispatch(getEncryptionAndDecryption({
-      id: this.user.user?.institutionId
-    }));
     this.encrypTionForm = this.fb.group({
-      ivKey: ['', Validators.required],
-      secretKey: ['', Validators.required],
+      institutionId: '',
+      institutionName: '',
+      secretKey: ['', [Validators.minLength(16), Validators.maxLength(16)]],
+      ivKey: ['', [Validators.minLength(16), Validators.maxLength(16)]],
     });
-    // this.service.getEncryptionKeysWithInstitutionId(this.id).subscribe((res: any) => {
-    //   console.log(res)
-    // })
-    
 
+    this.integrateAPIForm = this.fb.group({
+      id: '',
+      configurationEndpoint: ['', [Validators.minLength(16), Validators.maxLength(16)]],
+      queryEndpoint: ['', [Validators.minLength(16), Validators.maxLength(16)]],
+    });
+
+    const data: any = localStorage.getItem('authData');
+    this.user = JSON.parse(data);
+
+    this.store.dispatch(
+      getEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+      })
+    );
+      this.store.dispatch(
+        updatePartnerAPI({
+          id: this.user.user?.institutionId,
+        })
+      )
+  }
+  get basicForm() {
+    return this.encrypTionForm.controls;
   }
 
   selectTab(i: number) {
@@ -66,12 +81,24 @@ export class ApiConfiguratiosnComponent implements OnInit {
   }
 
   partnerApi() {
-    // this.store.dispatch(createEncryptionAndDecryption({
-    //   payload: this.encrypTionForm.value,
-    //   id: this.id
-    // }));
-    this.security$.subscribe((res) => console.log(res))
-
+    console.log(this.user.user?.institutionId)
+    this.encrypTionForm.patchValue({
+      institutionId: +this.user.user?.institutionId,
+    })
+    this.store.dispatch(createEncryptionAndDecryption({
+      id: this.user.user?.institutionId,
+      payload: this.encrypTionForm.value,
+      
+    }));
     // this.requestBtn = true;
+  }
+  endpointApi(){
+    this.integrateAPIForm.patchValue({
+      id: +this.userId
+    })
+    this.store.dispatch(createPartnerAPI({
+      id: this.userId,
+      payload: this.integrateAPIForm.value,   
+    }));
   }
 }

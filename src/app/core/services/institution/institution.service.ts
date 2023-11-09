@@ -76,11 +76,27 @@ export class InstitutionService
   }
 
   createOrUpdateInstitutionEncryptionKeys(
-    institutionId: string | number,
+    institutionId: number,
     payload: any
   ) : Observable<any>{
     return this.http.post<any>(
-      `${this.baseUrl}api/v1/InstitutionEncryption/CrearOrUpdateInstitutionEncryptionKeys/${institutionId}`,
+      `${this.baseUrl}api/v1/InstitutionEncryption/CreateOrUpdateInstitutionEncryptionKeys?InstitutionId=${institutionId}`,
+      payload
+    );
+  }
+
+  getAPIDataByInstitutionId(institutionId: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/GetApiDataByInstitutionId/${institutionId}`
+    );
+  }
+
+  CreateOrUpdateInstitutionEndpoints(
+    id:any,
+    payload: any
+  ) : Observable<any>{
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/CreateOrUpdateInstitutionEndpoints`,
       payload
     );
   }
