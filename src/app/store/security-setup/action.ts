@@ -29,3 +29,13 @@ export const integratePartnerAPISuccess = createAction(
     '[security] integrate partner API success',
     props<{payload: any}>()
 )
+export const createpartnerAPI = createAction(
+    '[create decryption] create partner API',
+    props<{payload: any, id: any}>()
+
+);
+
+export const createpartnerAPISuccess = createAction(
+    '[create decryption] create partner API success',
+    props<{payload: any}>()
+);

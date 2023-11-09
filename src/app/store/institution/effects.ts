@@ -7,7 +7,7 @@ import { NotificationsService } from 'src/app/core/services/shared/notifications
 import { StorageService } from 'src/app/core/services/shared/storage.service';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { setAPIResponseMessage } from '../shared/app.action';
-import { getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption } from './action';
+import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, updatePartnerAPI, updatePartnerAPISuccess } from './action';
 
 
 
@@ -97,5 +97,114 @@ export class InstitutionEffects {
     );
   });
 
- 
+  CreateEncryptionDetails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createEncryptionAndDecryption),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {payload, id } = action;
+        return this.institutionService.createOrUpdateInstitutionEncryptionKeys(id, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return createEncryptionAndDecryptionSuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
+  updatePartnerAPI$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(updatePartnerAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+        
+        return this.institutionService.getAPIDataByInstitutionId(action.id)
+          .pipe(
+            map((data) => {
+              this.appStore.dispatch(
+                setAPIResponseMessage({
+                  apiResponseMessage: {
+                    apiResponseMessage: '',
+                    isLoading: false,
+                    isApiSuccessful: true,
+                  },
+                })
+              );
+              // read data and update payload
+              return updatePartnerAPISuccess({
+                payload: data.payload
+                  
+              });
+            })
+          );
+      })
+    );
+  });
+
+  CreatePartnerAPI$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(createPartnerAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {id, payload } = action;
+        return this.institutionService.CreateOrUpdateInstitutionEndpoints(id, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return createPartnerAPISuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
 }
