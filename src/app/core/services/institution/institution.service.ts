@@ -96,7 +96,7 @@ export class InstitutionService
     payload: any
   ) : Observable<any>{
     return this.http.post<any>(
-      `${this.baseUrl}api/v1/InstitutionEncryption/CreateOrUpdateInstitutionEndpoints`,
+      `${this.baseUrl}api/v1/InstitutionEncryption/CreateOrUpdateInstitutionEndpoints?InstitutionId=${id}`,
       payload
     );
   }

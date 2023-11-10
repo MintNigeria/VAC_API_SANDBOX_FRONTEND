@@ -30,14 +30,14 @@ export const createEncryptionAndDecryptionSuccess = createAction(
   props<{payload: any}>()
 );
 
-export const updatePartnerAPI = createAction(
-  '[update partner api] update partner API',
+export const getPartnerAPI = createAction(
+  '[get partner api] get partner API',
   props<{id: any}>()
 
 );
 
-export const updatePartnerAPISuccess = createAction(
-  '[update partner api] integrate partner API success',
+export const getPartnerAPISuccess = createAction(
+  '[get partner api] integrate partner API success',
   props<{payload: any}>()
 )
 

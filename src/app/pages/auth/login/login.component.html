@@ -75,7 +75,6 @@
           <app-app-button
             [overRideButtonClass]="true"
             [disabled]="loginAuth.invalid || status === 'LOADING'"
-            [status]="status"
             (buttonClick)="loginAdmin()"
             [customClass]="
               'btn bg-[#4086EF] hover:bg-[#4086EF] capitalize flex outline-0 border-0 justify-center w-full py-3 rounded-xl px-6 text-center md:text-base text-white'

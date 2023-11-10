@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Actions, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { TestEnvironmentService } from 'src/app/core/services/test-environment/test-environment.service';
-import { createEncryptionAndDecryption, createPartnerAPI, getEncryptionAndDecryption, updatePartnerAPI } from 'src/app/store/institution/action';
+import { createEncryptionAndDecryption, createPartnerAPI, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from 'src/app/store/institution/action';
 import { securitySelector } from 'src/app/store/security-setup/selector';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
@@ -35,16 +36,20 @@ export class ApiConfiguratiosnComponent implements OnInit {
   activeTab: string = 'encryption';
   status: Status = Status.NORMAL;
   user: any;
+  btnText: string = 'Save Setup';
 
   constructor(
     private fb: FormBuilder,
     private matDialog: MatDialog,
     private store: Store,
+    private actions$: Actions,
     private appStore: Store<AppStateInterface>,
     private service: InstitutionService
   ) {}
 
   ngOnInit(): void {
+    const data: any = localStorage.getItem('authData');
+    this.user = JSON.parse(data);
     this.encrypTionForm = this.fb.group({
       institutionId: '',
       institutionName: '',
@@ -53,52 +58,122 @@ export class ApiConfiguratiosnComponent implements OnInit {
     });
 
     this.integrateAPIForm = this.fb.group({
-      id: '',
-      configurationEndpoint: ['', [Validators.minLength(16), Validators.maxLength(16)]],
-      queryEndpoint: ['', [Validators.minLength(16), Validators.maxLength(16)]],
+      configurationEndpoint: ['', Validators.required],
+      queryEndpoint: ['', Validators.required],
     });
 
-    const data: any = localStorage.getItem('authData');
-    this.user = JSON.parse(data);
+    this.getEncyptionResponse()
+   
+      // this.store.dispatch(
+      //   updatePartnerAPI({
+      //     id: this.user.user?.institutionId,
+      //   })
+      // )
+  }
 
+
+  selectTab(i: number) {
+    this.activeTab = this.mockData[i].type;
+    if (i === 0) {
+      this.getEncyptionResponse()
+    } else {
+      this.getConfigResponse()
+
+    }
+  }
+
+  getEncyptionResponse() {
     this.store.dispatch(
       getEncryptionAndDecryption({
         id: this.user.user?.institutionId,
       })
     );
-      this.store.dispatch(
-        updatePartnerAPI({
-          id: this.user.user?.institutionId,
+    this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+      console.log(res)
+      if (res.payload.payload !== null) {
+        this.btnText = 'Update Setup'
+        this.encrypTionForm.patchValue({
+          ivKey: '',
+          secretKey: ''
         })
-      )
+      }
+    })
+   
   }
-  get basicForm() {
-    return this.encrypTionForm.controls;
+  getConfigResponse() {
+    this.store.dispatch(
+      getPartnerAPI({
+        id: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(getPartnerAPISuccess)).subscribe((res: any) => {
+      console.log(res)
+      if (res.payload.payload !== null) {
+        this.btnText = 'Update Setup'
+        this.integrateAPIForm.patchValue({
+          configurationEndpoint: '',
+          queryEndpoint: ''
+        })
+      }
+    })
+   
   }
 
-  selectTab(i: number) {
-    this.activeTab = this.mockData[i].type;
+
+  createEncryptionDecryptionData() {
+    const {institutionId, institutionName, secretKey, ivKey } = this.encrypTionForm.value;
+    const payload = {
+      institutionId: Number(this.user.user?.institutionId),
+      institutionName,
+      secretKey,
+      ivKey
+    }
+    if (this.btnText === 'Save Setup') {
+      console.log(payload)
+      this.store.dispatch(createEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+        payload
+        
+      }));
+    } else {
+      this.store.dispatch(createEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+        payload,
+        
+      }));
+
+    }
+  }
+  createPartnerApi() {
+    if (this.btnText === 'Save Setup') {
+
+       this.store.dispatch(createPartnerAPI({
+      id: this.user.user?.institutionId,
+      payload: this.integrateAPIForm.value,   
+    }));
+    } else {
+       this.store.dispatch(createPartnerAPI({
+      id: this.userId,
+      payload: this.integrateAPIForm.value,   
+    }));
+
+    }
   }
 
   partnerApi() {
     console.log(this.user.user?.institutionId)
     this.encrypTionForm.patchValue({
-      institutionId: +this.user.user?.institutionId,
+      institutionId: this.user.user?.institutionId,
     })
-    this.store.dispatch(createEncryptionAndDecryption({
-      id: this.user.user?.institutionId,
-      payload: this.encrypTionForm.value,
-      
-    }));
     // this.requestBtn = true;
   }
   endpointApi(){
     this.integrateAPIForm.patchValue({
       id: +this.userId
     })
-    this.store.dispatch(createPartnerAPI({
-      id: this.userId,
-      payload: this.integrateAPIForm.value,   
-    }));
+    // this.store.dispatch(createPartnerAPI({
+    //   id: this.userId,
+    //   payload: this.integrateAPIForm.value,   
+    // }));
   }
 }

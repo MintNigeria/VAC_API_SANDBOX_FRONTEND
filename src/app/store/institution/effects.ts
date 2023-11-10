@@ -7,7 +7,7 @@ import { NotificationsService } from 'src/app/core/services/shared/notifications
 import { StorageService } from 'src/app/core/services/shared/storage.service';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { setAPIResponseMessage } from '../shared/app.action';
-import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, updatePartnerAPI, updatePartnerAPISuccess } from './action';
+import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from './action';
 
 
 
@@ -87,8 +87,8 @@ export class InstitutionEffects {
                 })
               );
               // read data and update payload
-              return getAllInstitutionsDropdownSuccess({
-                payload: data.payload
+              return getEncryptionAndDecryptionSuccess({
+                payload: data
                   
               });
             })
@@ -134,9 +134,9 @@ export class InstitutionEffects {
     );
   });
 
-  updatePartnerAPI$ = createEffect(() => {
+  getPartnerAPI$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(updatePartnerAPI),
+      ofType(getPartnerAPI),
       switchMap((action) => {
         this.appStore.dispatch(
           setAPIResponseMessage({
@@ -161,8 +161,8 @@ export class InstitutionEffects {
                 })
               );
               // read data and update payload
-              return updatePartnerAPISuccess({
-                payload: data.payload
+              return getPartnerAPISuccess({
+                payload: data
                   
               });
             })
