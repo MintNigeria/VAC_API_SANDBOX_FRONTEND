@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DiffEditorModel } from 'ngx-monaco-editor-v2';
 @Component({
   selector: 'app-editor',
   standalone: false,
@@ -38,6 +39,15 @@ export class EditorComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  originalModel: DiffEditorModel = {
+    code: 'heLLo world!',
+    language: 'text/plain'
+  };
+
+  modifiedModel: DiffEditorModel = {
+    code: 'hello orlando!',
+    language: 'text/plain'
+  };
   
   onInit(editor: any) {
     editor.onDidChangeModelContent((e: any) => {

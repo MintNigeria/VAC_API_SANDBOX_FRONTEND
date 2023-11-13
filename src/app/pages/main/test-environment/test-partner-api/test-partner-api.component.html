@@ -25,7 +25,7 @@
   
     </div>
     <div class="my-11">
-      <app-editor  [editorOptions]="editorOptions" (editorPayload)="codePayload($event)"></app-editor>
+      <app-editor  [editorOptions]="activeTab.editorOptions" (editorPayload)="codePayload($event)"></app-editor>
     </div>
     <div>
       <app-app-button [overRideButtonClass]="true"
@@ -34,7 +34,35 @@
     " [buttonText]="'Test'"></app-app-button>
     </div>
 </ng-container>
-<ng-container *ngIf="activeTab?.slug === 'api'">
+<ng-container *ngIf="activeTab?.slug === 'decrypt'">
+  
+    <div class="border-b-2 mt-8 flex items-center justify-between">
+      <div>
+        <h3 class="text-lg font-medium text-[#101828]">Decrypt Payload</h3>
+        <p class="text-[#475467] mb-4">Please paste the encrypted payload in the box below to decrypt</p>
+      </div>
+  
+    </div>
+    <div class="mt-4 grid gap-4 md:grid-cols-[1fr_auto]">
+      <div class="grid grid-cols-[auto_1fr]">
+        <label
+          class="text-base font-medium text-[#101828] bg-white px-[14px] py-[10px] rounded-l-lg border border-solid border-[#D0D5DD]"
+          for="partner api endpoint">Encrypted Payload</label>
+        <input [class]="
+            ' placeholder:text-[#667085] text-black bg-white block pl-[20px] pr-[60px] border border-solid border-l-0 border-[#D0D5DD] outline-0 rounded-r-[8px] py-3'
+          " [placeholder]="'Enter enter encrypted payload'" name="{{activeTab?.apiUrl}}" [(ngModel)]="activeTab.apiUrl">
+      </div>
+      <app-app-button [overRideButtonClass]="true" [disabled]="activeTab.apiUrl === ''" [status]="status"
+        (buttonClick)="decryptEncryptedData()" [customClass]="
+          'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-full outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+        " [buttonText]="'Decrypt'"></app-app-button>
+    </div>
+    <div class="my-11">
+      <app-editor [code]="code"  [editorOptions]="activeTab.editorOptions" (editorPayload)="codePayload($event)"></app-editor>
+    </div>
+   
+</ng-container>
+<ng-container *ngIf="activeTab?.slug === 'record'">
   
     <div class="border-b-2 mt-8 flex items-center justify-between">
       <div>
@@ -44,7 +72,26 @@
   
     </div>
     <div class="my-11">
-      <app-editor  [editorOptions]="editorOptions" (editorPayload)="codePayload($event)"></app-editor>
+      <app-editor [code]="code"  [editorOptions]="activeTab.editorOptions" (editorPayload)="codePayload($event)"></app-editor>
+    </div>
+    <div>
+      <app-app-button [overRideButtonClass]="true"
+    (buttonClick)="testAPI()" [customClass]="
+      'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
+    " [buttonText]="'Test'"></app-app-button>
+    </div>
+</ng-container>
+<ng-container *ngIf="activeTab?.slug === 'config'">
+  
+    <div class="border-b-2 mt-8 flex items-center justify-between">
+      <div>
+        <h3 class="text-lg font-medium text-[#101828]">Test Institution Configuration</h3>
+        <p class="text-[#475467] mb-4">Results from you test configuration endpoint is displayed below</p>
+      </div>
+  
+    </div>
+    <div class="my-11">
+      <app-editor [code]="institutionConfigData"  [editorOptions]="activeTab.editorOptions" (editorPayload)="codePayload($event)"></app-editor>
     </div>
     <div>
       <app-app-button [overRideButtonClass]="true"

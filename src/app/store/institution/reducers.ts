@@ -2,14 +2,17 @@ import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IInstitutionStateInterface } from './types/index.type';
 
 import * as storage from '../storage';
-import { callInstitutionRecordAPISuccess, createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, encryptDataSuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, getPartnerAPISuccess } from './action';
+import { callInstitutionConfigurationAPISuccess, callInstitutionRecordAPISuccess, createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, decryptDataSuccess, encryptDataSuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, getPartnerAPISuccess, invokeSupportSuccess } from './action';
 
 const initialState: IInstitutionStateInterface = {
   dropdown: null,
   encryptionData: null,
   partnerAPIdata: null,
   encryptData: null,
+  decryptData: null,
   apiData: null,
+  configData: null,
+  support: null,
 };
 
 export const institutionReducers = createReducer(
@@ -50,10 +53,28 @@ export const institutionReducers = createReducer(
       encryptData : payload
     };
   }),
+  on(decryptDataSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      decryptData : payload
+    };
+  }),
   on(callInstitutionRecordAPISuccess, (state, { payload }) => {
     return {
       ...state,
       apiData : payload
+    };
+  }),
+  on(callInstitutionConfigurationAPISuccess, (state, { payload }) => {
+    return {
+      ...state,
+      configData : payload
+    };
+  }),
+  on(invokeSupportSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      support : payload
     };
   }),
   

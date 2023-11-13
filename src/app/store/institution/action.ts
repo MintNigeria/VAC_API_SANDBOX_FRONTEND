@@ -62,6 +62,16 @@ export const encryptDataSuccess = createAction(
   '[encrypt data] encrypt data success',
   props<{payload: any}>()
 )
+export const decryptData = createAction(
+  '[decrypt data] decrypt data',
+  props<{params: any, payload: any}>()
+
+);
+
+export const decryptDataSuccess = createAction(
+  '[decrypt data] decrypt data success',
+  props<{payload: any}>()
+)
 export const callInstitutionRecordAPI = createAction(
   '[test api] test api',
   props<{params: any, payload: any}>()
@@ -70,5 +80,27 @@ export const callInstitutionRecordAPI = createAction(
 
 export const callInstitutionRecordAPISuccess = createAction(
   '[test api] test api response',
+  props<{payload: any}>()
+)
+export const callInstitutionConfigurationAPI = createAction(
+  '[test configuration api ] test configuration api ',
+  props<{InstitutionId: any}>()
+
+);
+
+export const callInstitutionConfigurationAPISuccess = createAction(
+  '[test configuration api ] test configuration api  response',
+  props<{payload: any}>()
+)
+
+
+export const invokeSupport = createAction(
+  '[support] support',
+  props<{payload: any}>()
+
+);
+
+export const invokeSupportSuccess = createAction(
+  '[support ] support success',
   props<{payload: any}>()
 )

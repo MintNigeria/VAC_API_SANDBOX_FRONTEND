@@ -7,7 +7,8 @@ import { NotificationsService } from 'src/app/core/services/shared/notifications
 import { StorageService } from 'src/app/core/services/shared/storage.service';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { setAPIResponseMessage } from '../shared/app.action';
-import { callInstitutionRecordAPI, callInstitutionRecordAPISuccess, createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, encryptData, encryptDataSuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from './action';
+import { callInstitutionConfigurationAPI, callInstitutionConfigurationAPISuccess, callInstitutionRecordAPI, callInstitutionRecordAPISuccess, createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, decryptData, decryptDataSuccess, encryptData, encryptDataSuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess, invokeSupport, invokeSupportSuccess } from './action';
+import { UploadsService } from 'src/app/core/services/uploads/uploads.service';
 
 
 
@@ -18,7 +19,8 @@ export class InstitutionEffects {
     private storage: StorageService,
     private appStore: Store<AppResponseInterface>,
     private notification: NotificationsService,
-    private institutionService: InstitutionService
+    private institutionService: InstitutionService,
+    private supportService: UploadsService
   ) {}
 
 
@@ -245,6 +247,43 @@ export class InstitutionEffects {
     );
   });
 
+  decryptData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(decryptData),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {params, payload } = action;
+        return this.institutionService.decryptData(params, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return decryptDataSuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
   callInstitutionRecordAPI$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(callInstitutionRecordAPI),
@@ -274,6 +313,79 @@ export class InstitutionEffects {
 
             // read data and update payload
             return callInstitutionRecordAPISuccess({
+              payload: data
+            });
+          })
+        );
+      })
+    );
+  });
+
+  callInstitutionconfigurationAPI$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(callInstitutionConfigurationAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        return this.institutionService.callInstitutionConfigurationAPI(action.InstitutionId).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return callInstitutionConfigurationAPISuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
+  support$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(invokeSupport),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {payload } = action;
+        return this.supportService.supportNotification( payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return invokeSupportSuccess({
               payload: data.payload
             });
           })

@@ -29,6 +29,40 @@
           </div>
         </div>
         <div class="mb-4">
+          <div class="text-sm font-medium text-[#344054] mb-2">
+            <label for="firstName">First Name <span class="text-red-500">*</span></label>
+          </div>
+          <div class="relative w-full mt-2">
+            <app-app-text-input
+              [class]="
+                ' placeholder:text-[#667085] text-black block pl-[20px] border-2 border-[#D0D5DD] w-full outline-0 rounded-[8px] h-14 bg-white'
+              "
+              [placeholder]="'Enter First Name'"
+              [control]="$any(support.get('firstName'))"
+              [errorMessage]="'First Name is Required'"
+              [required]="true"
+            >
+            </app-app-text-input>
+          </div>
+        </div>
+         <div class="mb-4">
+          <div class="text-sm font-medium text-[#344054] mb-2">
+            <label for="lastName">Last Name <span class="text-red-500">*</span></label>
+          </div>
+          <div class="relative w-full mt-2">
+            <app-app-text-input
+              [class]="
+                ' placeholder:text-[#667085] text-black block pl-[20px] border-2 border-[#D0D5DD] w-full outline-0 rounded-[8px] h-14 bg-white'
+              "
+              [placeholder]="'Enter Last Name'"
+              [control]="$any(support.get('lastName'))"
+              [errorMessage]="'Last Name is Required'"
+              [required]="true"
+            >
+            </app-app-text-input>
+          </div>
+        </div>
+        <div class="mb-4">
           <app-app-select
             [readonlyBtn]="true"
             [defaultText]="'Select Issue Type '"
@@ -60,7 +94,7 @@
             >Message is required</small
           >
         </div>
-        <div class="mb-4">
+        <div class="mb-4" (click)="upload.click()">
           <div class="text-sm font-medium text-[#344054] mb-2">
             <label for="file">Upload Supporting Document (if any)</label>
           </div>
@@ -68,13 +102,13 @@
             class="text-black block pl-[20px] border-2 border-[#D0D5DD] w-full outline-0 rounded-[8px] h-14 bg-white"
           >
             <button
-              (click)="fileInput.click()"
+             
               class="flex gap-4 p-3 items-center"
             >
               <img src="assets/images/upload.png" alt="" />
-              <span class="text-[#667085]">Click to upload file</span>
+              <span class="text-[#667085]"> {{uploadedFile? uploadedFile.name : 'Click to upload file'}} </span>
             </button>
-            <input type="file" class="hidden" #fileInput />
+            <input type="file" class="hidden" accept=".png, .jpg, .jpeg" #upload (change)="getFile($event, 'profilePicture')" />
           </div>
           <p class="text-[#667085] text-sm">
             <span class="text-[#101828] font-medium">Format</span>: JPEG, PNG,

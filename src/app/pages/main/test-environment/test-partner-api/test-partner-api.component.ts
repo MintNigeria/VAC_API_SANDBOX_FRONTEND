@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
-import { callInstitutionRecordAPI, callInstitutionRecordAPISuccess, encryptData, encryptDataSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess } from 'src/app/store/institution/action';
+import { callInstitutionConfigurationAPI, callInstitutionConfigurationAPISuccess, callInstitutionRecordAPI, callInstitutionRecordAPISuccess, decryptData, decryptDataSuccess, encryptData, encryptDataSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess } from 'src/app/store/institution/action';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
 
@@ -33,14 +33,27 @@ export class TestPartnerAPIComponent implements OnInit {
   encrypTionForm!: FormGroup
   mockData = [
     {
-      tabName: 'Setup Encyrption & Decryption ',
+      tabName: 'Test Encyrption ',
       apiUrl: 'https://1',
-      slug: 'encrypt'
+      slug: 'encrypt',
+      editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: false}
     },
     {
-      tabName: 'Integrate with Partner API',
+      tabName: 'Test Decrytion',
+      apiUrl: '',
+      slug: 'decrypt',
+      editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
+    },
+    {
+      tabName: 'Test Institution record API',
       apiUrl: 'https://2',
-      slug: 'api'
+      slug: 'record'
+    },
+    {
+      tabName: 'Test Institution Configuration API',
+      apiUrl: 'https://2',
+      slug: 'config',
+      editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
     },
     // {
     //   tabName: 'Sample Test 3',
@@ -58,8 +71,7 @@ export class TestPartnerAPIComponent implements OnInit {
 
  
 
-  editorOptions = {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'javascript'};
-
+readOnly = false;
   activeTab: any;
 
   requestBtn: boolean = false;
@@ -67,6 +79,8 @@ export class TestPartnerAPIComponent implements OnInit {
   user: any;
   encryptionData: any;
   endpointPayload: any;
+  code = ''
+  institutionConfigData: any;
   constructor(
     private fb: FormBuilder, 
     private matDialog: MatDialog,
@@ -91,6 +105,14 @@ export class TestPartnerAPIComponent implements OnInit {
 
   selectTab(i: number) {
     this.activeTab = this.mockData[i];
+    if (this.activeTab.slug === 'encrypt')  {
+      this.getEncyptionResponse()
+    } else if (this.activeTab.slug === 'decrypt') {
+      this.getEncyptionResponse()
+    } else {
+      this.institutionConfigResponse()
+
+    }
   }
   getEncyptionResponse() {
     this.store.dispatch(
@@ -102,6 +124,34 @@ export class TestPartnerAPIComponent implements OnInit {
       console.log(res)
       if (res.payload.payload !== null) {
         this.encryptionData = res.payload.payload
+      }
+    })
+   
+  }
+  getDecyptionResponse() {
+    this.store.dispatch(
+      getEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+      console.log(res)
+      if (res.payload.payload !== null) {
+        this.encryptionData = res.payload.payload
+      }
+    })
+   
+  }
+  institutionConfigResponse() {
+    this.store.dispatch(
+      callInstitutionConfigurationAPI({
+        InstitutionId: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(callInstitutionConfigurationAPISuccess)).subscribe((res: any) => {
+      console.log(res)
+      if (res.payload !== null) {
+        this.institutionConfigData = `${JSON.stringify(res.payload, null, '\t')}`;
       }
     })
    
@@ -160,17 +210,32 @@ export class TestPartnerAPIComponent implements OnInit {
       console.log(res)
     })
   }
+  decryptEncryptedData() {
+    const params = {
+
+      ivKey: this.encryptionData.ivKey,
+      secretKey: this.encryptionData.secretKey,
+    }
+    const payload = {
+      ...this.endpointPayload
+    }
+    this.store.dispatch(decryptData({params, payload}))
+    this.actions$.pipe(ofType(decryptDataSuccess)).subscribe((res: any) => {
+      console.log(res)
+    })
+  }
+
   testAPI() {
     const params = {
 
       InstitutionId: 24,
     }
-    const payload = {
-      ...this.endpointPayload
-    }
+    const payload = this.activeTab.url
     this.store.dispatch(callInstitutionRecordAPI({params, payload}))
     this.actions$.pipe(ofType(callInstitutionRecordAPISuccess)).subscribe((res: any) => {
       console.log(res)
+      this.code = `${JSON.stringify(res.payload, null, '\t')}`;
+      this.readOnly = true;
     })
   }
 }
