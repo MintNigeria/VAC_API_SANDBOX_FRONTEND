@@ -51,6 +51,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
     const data: any = localStorage.getItem('authData');
     this.user = JSON.parse(data);
     this.encrypTionForm = this.fb.group({
+      id: '',
       institutionId: '',
       institutionName: '',
       secretKey: ['', [Validators.minLength(16), Validators.maxLength(16)]],
@@ -58,6 +59,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
     });
 
     this.integrateAPIForm = this.fb.group({
+      id: '',
       configurationEndpoint: ['', Validators.required],
       queryEndpoint: ['', Validators.required],
     });
@@ -93,9 +95,13 @@ export class ApiConfiguratiosnComponent implements OnInit {
       if (res.payload.payload !== null) {
         this.btnText = 'Update Setup'
         this.encrypTionForm.patchValue({
-          ivKey: '',
-          secretKey: ''
+          ivKey: res.payload.payload?.ivKey,
+          secretKey: res.payload.payload?.secretKey,
+          id: res.payload.payload?.id
         })
+      } else {
+        this.btnText = 'Save Setup'
+
       }
     })
    
@@ -107,13 +113,16 @@ export class ApiConfiguratiosnComponent implements OnInit {
       })
     );
     this.actions$.pipe(ofType(getPartnerAPISuccess)).subscribe((res: any) => {
-      console.log(res)
       if (res.payload.payload !== null) {
         this.btnText = 'Update Setup'
         this.integrateAPIForm.patchValue({
-          configurationEndpoint: '',
-          queryEndpoint: ''
+          configurationEndpoint: res.payload.payload.configurationEndpoint,
+          queryEndpoint: res.payload.payload.recordQueryEndpoint,
+          id: res.payload.payload.id,
         })
+      } else {
+        this.btnText = 'Save Setup'
+
       }
     })
    
@@ -121,7 +130,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
 
 
   createEncryptionDecryptionData() {
-    const {institutionId, institutionName, secretKey, ivKey } = this.encrypTionForm.value;
+    const {institutionId, institutionName, secretKey, ivKey, id } = this.encrypTionForm.value;
     const payload = {
       institutionId: Number(this.user.user?.institutionId),
       institutionName,
@@ -129,33 +138,42 @@ export class ApiConfiguratiosnComponent implements OnInit {
       ivKey
     }
     if (this.btnText === 'Save Setup') {
-      console.log(payload)
       this.store.dispatch(createEncryptionAndDecryption({
         id: this.user.user?.institutionId,
         payload
         
       }));
+      this.getEncyptionResponse()
     } else {
       this.store.dispatch(createEncryptionAndDecryption({
         id: this.user.user?.institutionId,
-        payload,
+        payload: {...payload, id },
         
       }));
+      this.getEncyptionResponse()
 
     }
   }
   createPartnerApi() {
+    const {configurationEndpoint, queryEndpoint, id } = this.integrateAPIForm.value;
+
+    const payload = {
+      configurationEndpoint,
+      queryEndpoint
+    }
     if (this.btnText === 'Save Setup') {
 
        this.store.dispatch(createPartnerAPI({
       id: this.user.user?.institutionId,
-      payload: this.integrateAPIForm.value,   
+      payload,   
     }));
-    } else {
-       this.store.dispatch(createPartnerAPI({
-      id: this.userId,
-      payload: this.integrateAPIForm.value,   
+    this.getConfigResponse()
+  } else {
+    this.store.dispatch(createPartnerAPI({
+      id: this.user.user?.institutionId,
+      payload: {...payload, id},   
     }));
+    this.getConfigResponse()
 
     }
   }

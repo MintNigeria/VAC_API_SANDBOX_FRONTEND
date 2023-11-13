@@ -7,7 +7,7 @@ import { NotificationsService } from 'src/app/core/services/shared/notifications
 import { StorageService } from 'src/app/core/services/shared/storage.service';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { setAPIResponseMessage } from '../shared/app.action';
-import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from './action';
+import { callInstitutionRecordAPI, callInstitutionRecordAPISuccess, createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, encryptData, encryptDataSuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from './action';
 
 
 
@@ -200,6 +200,80 @@ export class InstitutionEffects {
 
             // read data and update payload
             return createPartnerAPISuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
+  encryptData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(encryptData),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {params, payload } = action;
+        return this.institutionService.encryptData(params, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return encryptDataSuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
+  callInstitutionRecordAPI$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(callInstitutionRecordAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {params, payload } = action;
+        return this.institutionService.callInstitutionRecordAPI(params, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return callInstitutionRecordAPISuccess({
               payload: data.payload
             });
           })

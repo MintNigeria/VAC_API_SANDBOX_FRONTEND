@@ -1,13 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Actions, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
+import { callInstitutionRecordAPI, callInstitutionRecordAPISuccess, encryptData, encryptDataSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess } from 'src/app/store/institution/action';
+import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
 
 export interface CodeModel {
@@ -32,10 +35,12 @@ export class TestPartnerAPIComponent implements OnInit {
     {
       tabName: 'Setup Encyrption & Decryption ',
       apiUrl: 'https://1',
+      slug: 'encrypt'
     },
     {
       tabName: 'Integrate with Partner API',
       apiUrl: 'https://2',
+      slug: 'api'
     },
     // {
     //   tabName: 'Sample Test 3',
@@ -51,62 +56,34 @@ export class TestPartnerAPIComponent implements OnInit {
     // },
   ];
 
-  exampleResponse = {
-    error: false,
-    message: '3 Categor(ies) Available',
-    data: [
-      {
-        id: 1,
-        created_by: 1,
-        name: 'Electronics',
-        slug: 'electronics',
-        short_description: null,
-        file_path: null,
-        is_active: 1,
-        status: 'Active',
-        created_at: '2023-08-20T10:36:34.000000Z',
-        updated_at: '2023-08-20T10:36:34.000000Z',
-      },
-      {
-        id: 2,
-        created_by: 1,
-        name: 'Food',
-        slug: 'food',
-        short_description: null,
-        file_path: null,
-        is_active: 1,
-        status: 'Active',
-        created_at: '2023-08-20T10:37:04.000000Z',
-        updated_at: '2023-08-20T10:37:04.000000Z',
-      },
-      {
-        id: 3,
-        created_by: 1,
-        name: 'Foooddd',
-        slug: 'foooddd',
-        short_description: null,
-        file_path: 'http://localhost:2020/category/category_food1.png',
-        is_active: 0,
-        status: 'Inactive',
-        created_at: '2023-08-20T10:39:41.000000Z',
-        updated_at: '2023-08-20T10:59:27.000000Z',
-      },
-    ],
-  };
+ 
+
+  editorOptions = {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'javascript'};
 
   activeTab: any;
 
   requestBtn: boolean = false;
   status: Status = Status.NORMAL;
-  constructor(private fb: FormBuilder, private matDialog: MatDialog) {}
+  user: any;
+  encryptionData: any;
+  endpointPayload: any;
+  constructor(
+    private fb: FormBuilder, 
+    private matDialog: MatDialog,
+    private store: Store,
+    private actions$: Actions,
+    private appStore: Store<AppStateInterface>,
+    private service: InstitutionService
+    ) {}
 
   ngOnInit(): void {
     this.activeTab = this.mockData[0]; //this should be set on api call not oninit
-    this.encrypTionForm = this.fb.group({
-      ivKey: ['', Validators.required],
-      secretKey: ['', Validators.required]
-    })
+    const data: any = localStorage.getItem('authData');
+    this.user = JSON.parse(data);
+    this.getEncyptionResponse()
   }
+
+
 
   partnerApi() {
     this.requestBtn = true;
@@ -114,6 +91,20 @@ export class TestPartnerAPIComponent implements OnInit {
 
   selectTab(i: number) {
     this.activeTab = this.mockData[i];
+  }
+  getEncyptionResponse() {
+    this.store.dispatch(
+      getEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+      console.log(res)
+      if (res.payload.payload !== null) {
+        this.encryptionData = res.payload.payload
+      }
+    })
+   
   }
 
   requestUrl() {
@@ -148,5 +139,38 @@ export class TestPartnerAPIComponent implements OnInit {
         okayText: 'Okay',
       },
     });
+  }
+
+  codePayload(event: any) {
+    console.log(typeof(event))
+    this.endpointPayload = JSON.parse(event);
+  }
+
+  testEncryption() {
+    const params = {
+
+      ivKey: this.encryptionData.ivKey,
+      secretKey: this.encryptionData.secretKey,
+    }
+    const payload = {
+      ...this.endpointPayload
+    }
+    this.store.dispatch(encryptData({params, payload}))
+    this.actions$.pipe(ofType(encryptDataSuccess)).subscribe((res: any) => {
+      console.log(res)
+    })
+  }
+  testAPI() {
+    const params = {
+
+      InstitutionId: 24,
+    }
+    const payload = {
+      ...this.endpointPayload
+    }
+    this.store.dispatch(callInstitutionRecordAPI({params, payload}))
+    this.actions$.pipe(ofType(callInstitutionRecordAPISuccess)).subscribe((res: any) => {
+      console.log(res)
+    })
   }
 }

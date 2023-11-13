@@ -69,6 +69,16 @@ export class InstitutionService
     );
   }
 
+  encryptData(params: any, payload: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/EncryptData?ivkey=${params.ivKey}&secret=${params.secretKey}`, payload
+    );
+  }
+  callInstitutionRecordAPI(params: any, payload: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/CallInstitutionRecordApi?InstitutionId=${params.InstitutionId}`, payload
+    );
+  }
   getEncryptionKeysWithInstitutionId(institutionId: string): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}api/v1/InstitutionEncryption/GetEncryptionKeysWithInstitutionId/${institutionId}`

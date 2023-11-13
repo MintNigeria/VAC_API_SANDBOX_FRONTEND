@@ -23,6 +23,7 @@ import { StoreModule } from '@ngrx/store';
 import { AuthEffects } from 'src/app/store/auth/effects';
 import { authReducers } from 'src/app/store/auth/reducers';
 import { InstitutionEffects } from 'src/app/store/institution/effects';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { InstitutionEffects } from 'src/app/store/institution/effects';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,

@@ -2,12 +2,14 @@ import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IInstitutionStateInterface } from './types/index.type';
 
 import * as storage from '../storage';
-import { createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, getPartnerAPISuccess } from './action';
+import { callInstitutionRecordAPISuccess, createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, encryptDataSuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, getPartnerAPISuccess } from './action';
 
 const initialState: IInstitutionStateInterface = {
   dropdown: null,
   encryptionData: null,
   partnerAPIdata: null,
+  encryptData: null,
+  apiData: null,
 };
 
 export const institutionReducers = createReducer(
@@ -40,6 +42,18 @@ export const institutionReducers = createReducer(
     return {
       ...state,
       dropdown : payload
+    };
+  }),
+  on(encryptDataSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      encryptData : payload
+    };
+  }),
+  on(callInstitutionRecordAPISuccess, (state, { payload }) => {
+    return {
+      ...state,
+      apiData : payload
     };
   }),
   

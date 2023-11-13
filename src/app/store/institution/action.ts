@@ -51,3 +51,24 @@ export const createPartnerAPISuccess = createAction(
   '[update partner api] integrate partner API success',
   props<{payload: any}>()
 )
+
+export const encryptData = createAction(
+  '[encrypt data] encrypt data',
+  props<{params: any, payload: any}>()
+
+);
+
+export const encryptDataSuccess = createAction(
+  '[encrypt data] encrypt data success',
+  props<{payload: any}>()
+)
+export const callInstitutionRecordAPI = createAction(
+  '[test api] test api',
+  props<{params: any, payload: any}>()
+
+);
+
+export const callInstitutionRecordAPISuccess = createAction(
+  '[test api] test api response',
+  props<{payload: any}>()
+)

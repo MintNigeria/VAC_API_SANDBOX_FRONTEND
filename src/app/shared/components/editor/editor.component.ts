@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-editor',
   standalone: false,
@@ -31,9 +31,24 @@ export class EditorComponent implements OnInit {
     gender: string
     dateOfBirth: string
   }`;
-  editorOptions = {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'javascript', readOnly: true};
+  @Input() editorOptions: any
+  @Output() editorPayload = new EventEmitter<any>()
 //   code: string= `
 // `;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
+  
+  onInit(editor: any) {
+    editor.onDidChangeModelContent((e: any) => {
+      if (e.isFlush) {
+        this.editorPayload.emit(this.code)
+        // true if setValue call
+      } else {
+        this.editorPayload.emit(this.code)
+        // false if user input
+      }
+    });
+    // getModel().modified.getValue()
+  }
 }
