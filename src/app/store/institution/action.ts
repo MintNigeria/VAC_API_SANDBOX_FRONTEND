@@ -51,3 +51,15 @@ export const createPartnerAPISuccess = createAction(
   '[update partner api] integrate partner API success',
   props<{payload: any}>()
 )
+
+
+export const invokeSupport = createAction(
+  '[support] support',
+  props<{payload: any}>()
+
+);
+
+export const invokeSupportSuccess = createAction(
+  '[support ] support success',
+  props<{payload: any}>()
+)
