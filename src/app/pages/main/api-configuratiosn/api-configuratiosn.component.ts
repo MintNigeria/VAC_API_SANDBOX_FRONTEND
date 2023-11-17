@@ -61,7 +61,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
     this.integrateAPIForm = this.fb.group({
       id: '',
       configurationEndpoint: ['', Validators.required],
-      queryEndpoint: ['', Validators.required],
+      recordQueryEndpoint: ['', Validators.required],
     });
 
     this.getEncyptionResponse()
@@ -117,7 +117,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
         this.btnText = 'Update Setup'
         this.integrateAPIForm.patchValue({
           configurationEndpoint: res.payload.payload.configurationEndpoint,
-          queryEndpoint: res.payload.payload.recordQueryEndpoint,
+          recordQueryEndpoint: res.payload.payload.recordQueryEndpoint,
           id: res.payload.payload.id,
         })
       } else {
@@ -155,11 +155,11 @@ export class ApiConfiguratiosnComponent implements OnInit {
     }
   }
   createPartnerApi() {
-    const {configurationEndpoint, queryEndpoint, id } = this.integrateAPIForm.value;
+    const {configurationEndpoint, recordQueryEndpoint, id } = this.integrateAPIForm.value;
 
     const payload = {
       configurationEndpoint,
-      queryEndpoint
+      recordQueryEndpoint
     }
     if (this.btnText === 'Save Setup') {
 

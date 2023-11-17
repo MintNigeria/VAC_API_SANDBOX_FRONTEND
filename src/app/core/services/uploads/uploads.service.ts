@@ -24,7 +24,7 @@ export class UploadsService extends BaseURI implements AbstractUploadsService {
   }
   supportNotification(payload:any){
     return this.http.post<any>(
-      `${this.baseUrl2}api/Notification/SandBoxSupport`, payload
+      `${this.baseUrl2}mint-messaging/api/Notification/SandBoxSupport`, payload
     );
   }
 }

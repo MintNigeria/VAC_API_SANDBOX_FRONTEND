@@ -76,7 +76,7 @@ export class InstitutionService
   }
   decryptData(params: any, payload: any): Observable<any> {
     return this.http.post<any>(
-      `${this.baseUrl}api/v1/InstitutionEncryption/DecryptData?ivkey=${params.ivKey}&secret=${params.secretKey}`, payload
+      `${this.baseUrl}api/v1/InstitutionEncryption/DecryptData?ivkey=${params.ivKey}&secret=${params.secretKey}&data=${params.data}`, {}
     );
   }
   callInstitutionRecordAPI(params: any, payload: any): Observable<any> {

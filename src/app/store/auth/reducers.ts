@@ -2,9 +2,9 @@ import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import {
   activateDeactivate2FASuccess,
   changePasswordSuccess,
-  confirm2FActionSuccess,
   createAccountSuccess,
   createPasswordSuccess,
+  emailVerificationSuccess,
   getUserProfileSuccess,
   loginSuccess,
   LOGOUT,
@@ -103,7 +103,7 @@ export const authReducers = createReducer(
       message,
     };
   }),
-  on(confirm2FActionSuccess, (state, { message }) => {
+  on(emailVerificationSuccess, (state, { message }) => {
     return {
       ...state,
       message,

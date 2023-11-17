@@ -14,23 +14,16 @@ import { DiffEditorModel } from 'ngx-monaco-editor-v2';
 })
 export class EditorComponent implements OnInit {
   @Input() code: string = `{
-    firstName: string
-    lastName: string
-    middleName: string
-    address: string
-    stateOfOrigin: string
-    academicInformationVM: {
-      programme: string
-      faculty: string
-      department: string
-      matriculationNumber: string
-      degree: string
-      grade: string
-      yearOfEntry: string
-      yearOfGraduation: string
-    }
-    gender: string
-    dateOfBirth: string
+    "firstName": "string",
+    "lastName": "string",
+    "middleName": "string",
+    "matriculationNumber": "string",
+    "grade": "string",
+    "degree": "string",
+    "gender": "string",
+    "faculty": "string",
+    "department": "string",
+    "yearOfGraduation": "string"
   }`;
   @Input() editorOptions: any
   @Output() editorPayload = new EventEmitter<any>()
@@ -52,7 +45,7 @@ export class EditorComponent implements OnInit {
   onInit(editor: any) {
     editor.onDidChangeModelContent((e: any) => {
       if (e.isFlush) {
-        this.editorPayload.emit(this.code)
+        // this.editorPayload.emit(this.code)
         // true if setValue call
       } else {
         this.editorPayload.emit(this.code)

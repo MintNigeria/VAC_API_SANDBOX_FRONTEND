@@ -81,6 +81,8 @@ readOnly = false;
   endpointPayload: any;
   code = ''
   institutionConfigData: any;
+  encryptedData= '';
+  showEncryptedData = false;
   constructor(
     private fb: FormBuilder, 
     private matDialog: MatDialog,
@@ -121,7 +123,6 @@ readOnly = false;
       })
     );
     this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
-      console.log(res)
       if (res.payload.payload !== null) {
         this.encryptionData = res.payload.payload
       }
@@ -135,7 +136,6 @@ readOnly = false;
       })
     );
     this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
-      console.log(res)
       if (res.payload.payload !== null) {
         this.encryptionData = res.payload.payload
       }
@@ -149,7 +149,6 @@ readOnly = false;
       })
     );
     this.actions$.pipe(ofType(callInstitutionConfigurationAPISuccess)).subscribe((res: any) => {
-      console.log(res)
       if (res.payload !== null) {
         this.institutionConfigData = `${JSON.stringify(res.payload, null, '\t')}`;
       }
@@ -157,43 +156,11 @@ readOnly = false;
    
   }
 
-  requestUrl() {
-    const openDialog = this.matDialog.open(ConfirmSuccessModalComponent, {
-      data: {
-        image: 'assets/images/question.png',
-        title: 'Request Live URL to Migrate Data',
-        content:
-          'By requesting a live URL, you certify that you have successfully tested our sample API endpoints. Would you like to continue to make this request?',
-        acceptText: 'Yes, Request Live URL',
-        cancelText: 'Go back',
-      },
-    });
-    openDialog.afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        // Call a function when the "Accept" button is clicked
-        this.confirmRequestUrl();
-      } else {
-        // Handle the "Cancel" action or do nothing
-      }
-    });
-  }
 
-  confirmRequestUrl() {
-    // call endpoint here
-    const openDialog = this.matDialog.open(SuccessModalComponent, {
-      data: {
-        image: 'assets/images/question.png',
-        title: 'Success',
-        content:
-          'The requested live URL has been successfully sent to your registered email address.',
-        okayText: 'Okay',
-      },
-    });
-  }
 
   codePayload(event: any) {
-    console.log(typeof(event))
     this.endpointPayload = JSON.parse(event);
+    
   }
 
   testEncryption() {
@@ -202,12 +169,15 @@ readOnly = false;
       ivKey: this.encryptionData.ivKey,
       secretKey: this.encryptionData.secretKey,
     }
-    const payload = {
-      ...this.endpointPayload
-    }
+    const payload = this.endpointPayload
+    console.log(payload)
+    
     this.store.dispatch(encryptData({params, payload}))
     this.actions$.pipe(ofType(encryptDataSuccess)).subscribe((res: any) => {
       console.log(res)
+      this.encryptedData = res.payload;
+      this.showEncryptedData = true;
+
     })
   }
   decryptEncryptedData() {
@@ -215,13 +185,15 @@ readOnly = false;
 
       ivKey: this.encryptionData.ivKey,
       secretKey: this.encryptionData.secretKey,
+      data: this.encryptedData
     }
     const payload = {
-      ...this.endpointPayload
+     
     }
     this.store.dispatch(decryptData({params, payload}))
     this.actions$.pipe(ofType(decryptDataSuccess)).subscribe((res: any) => {
-      console.log(res)
+      this.code = `${JSON.stringify(res.payload, null, '\t')}`;
+
     })
   }
 
@@ -230,7 +202,7 @@ readOnly = false;
 
       InstitutionId: 24,
     }
-    const payload = this.activeTab.url
+    const payload = this.endpointPayload
     this.store.dispatch(callInstitutionRecordAPI({params, payload}))
     this.actions$.pipe(ofType(callInstitutionRecordAPISuccess)).subscribe((res: any) => {
       console.log(res)

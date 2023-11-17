@@ -24,6 +24,7 @@ import { AuthEffects } from 'src/app/store/auth/effects';
 import { authReducers } from 'src/app/store/auth/reducers';
 import { InstitutionEffects } from 'src/app/store/institution/effects';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgOtpInputModule } from 'ng-otp-input';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SignUpEmailComponent,
     MatSelectModule,
     MatFormFieldModule,
+    NgOtpInputModule,
     StoreModule.forFeature('auth', authReducers),
     EffectsModule.forFeature([AuthEffects, InstitutionEffects]),
 
