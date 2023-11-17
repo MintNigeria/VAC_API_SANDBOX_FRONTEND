@@ -69,6 +69,26 @@ export class InstitutionService
     );
   }
 
+  encryptData(params: any, payload: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/EncryptData?ivkey=${params.ivKey}&secret=${params.secretKey}`, payload
+    );
+  }
+  decryptData(params: any, payload: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/DecryptData?ivkey=${params.ivKey}&secret=${params.secretKey}&data=${params.data}`, {}
+    );
+  }
+  callInstitutionRecordAPI(params: any, payload: any): Observable<any> {
+    return this.http.post<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/CallInstitutionRecordApi?InstitutionId=${params.InstitutionId}`, payload
+    );
+  }
+  callInstitutionConfigurationAPI(InstitutionId: any): Observable<any> {
+    return this.http.get<any>(
+      `${this.baseUrl}api/v1/InstitutionEncryption/CallInstitutionConfigurationApi?InstitutionId=${InstitutionId}`
+    );
+  }
   getEncryptionKeysWithInstitutionId(institutionId: string): Observable<any> {
     return this.http.get<any>(
       `${this.baseUrl}api/v1/InstitutionEncryption/GetEncryptionKeysWithInstitutionId/${institutionId}`
@@ -96,7 +116,7 @@ export class InstitutionService
     payload: any
   ) : Observable<any>{
     return this.http.post<any>(
-      `${this.baseUrl}api/v1/InstitutionEncryption/CreateOrUpdateInstitutionEndpoints`,
+      `${this.baseUrl}api/v1/InstitutionEncryption/CreateOrUpdateInstitutionEndpoints?InstitutionId=${id}`,
       payload
     );
   }

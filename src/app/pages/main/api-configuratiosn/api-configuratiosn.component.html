@@ -53,7 +53,7 @@
               >
               </app-app-text-input>
               <small
-              *ngIf="basicForm['ivKey']?.errors?.['maxlength']"
+              *ngIf="encrypTionForm.get('ivKey')?.errors?.['maxlength']"
               class="text-red-500 block"
               >Key must be 16 characters long</small
             >
@@ -73,7 +73,7 @@
               >
               </app-app-text-input>
               <small
-              *ngIf="basicForm['secretKey']?.errors?.['maxlength']"
+              *ngIf="encrypTionForm.get('secretKey')?.errors?.['maxlength']"
               class="text-red-500 block"
               >Key must be 16 characters long</small
             >
@@ -84,11 +84,11 @@
               [overRideButtonClass]="true"
               [disabled]="encrypTionForm.invalid"
               [status]="status"
-              (buttonClick)="partnerApi()"
+              (buttonClick)="createEncryptionDecryptionData()"
               [customClass]="
                 'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
               "
-              [buttonText]="'Save Setup'"
+              [buttonText]="btnText"
             ></app-app-button>
           </div>
         </form>
@@ -105,7 +105,7 @@
                   ' placeholder:text-[#667085] text-black block pl-[20px] pr-[60px] border border-[#D0D5DD] outline-0 rounded-[8px] h-14  w-full'
                 "
                 [placeholder]="'Enter your Record Query Endpoint'"
-                [control]="$any(integrateAPIForm.get('queryEndpoint'))"
+                [control]="$any(integrateAPIForm.get('recordQueryEndpoint'))"
                 [errorMessage]="'Record Query Endpoint is Required'"
                 [required]="true"
               >
@@ -133,12 +133,12 @@
               [overRideButtonClass]="true"
               [disabled]="integrateAPIForm.invalid"
               [status]="status"
-              (buttonClick)="endpointApi()"
+              (buttonClick)="createPartnerApi()"
               [customClass]="
                 'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
               "
-              [buttonText]="'Save Setup'"
-            ></app-app-button>
+              [buttonText]="btnText"
+              ></app-app-button>
           </div>
         </form>
       </ng-container>

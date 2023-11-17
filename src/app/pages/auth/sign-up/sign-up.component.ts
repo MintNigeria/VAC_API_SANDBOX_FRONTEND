@@ -64,7 +64,6 @@ export class SignUpComponent implements OnInit {
     this.signUp = this.fb.group({
       lastName: ['', Validators.required],
       firstName: ['', Validators.required],
-      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{12}$')]],
       email: ['', Validators.compose([Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/), Validators.required])],
       password: ['', [Validators.required, Validators.minLength(8)]],
       institutionId: ['', Validators.required],
@@ -84,8 +83,8 @@ export class SignUpComponent implements OnInit {
     }
     this.store.dispatch(createAccount({payload}));
     this.actions$.pipe(ofType(createAccountSuccess)).subscribe((res: any) => {
-      console.log(res)
-      if (res) {
+      if (res.payload.hasErrors === false) {
+        sessionStorage.setItem('email', email)
         this.router.navigateByUrl('/new-password');
 
       }

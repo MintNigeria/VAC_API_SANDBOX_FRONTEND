@@ -1,13 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Actions, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { ConfirmSuccessModalComponent } from 'src/app/shared/modals/confirm-success-modal/confirm-success-modal.component';
 import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/success-modal.component';
+import { callInstitutionConfigurationAPI, callInstitutionConfigurationAPISuccess, callInstitutionRecordAPI, callInstitutionRecordAPISuccess, decryptData, decryptDataSuccess, encryptData, encryptDataSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess } from 'src/app/store/institution/action';
+import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
 
 export interface CodeModel {
@@ -30,12 +33,27 @@ export class TestPartnerAPIComponent implements OnInit {
   encrypTionForm!: FormGroup
   mockData = [
     {
-      tabName: 'Setup Encyrption & Decryption ',
+      tabName: 'Test Encyrption ',
       apiUrl: 'https://1',
+      slug: 'encrypt',
+      editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: false}
     },
     {
-      tabName: 'Integrate with Partner API',
+      tabName: 'Test Decrytion',
+      apiUrl: '',
+      slug: 'decrypt',
+      editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
+    },
+    {
+      tabName: 'Test Institution record API',
       apiUrl: 'https://2',
+      slug: 'record'
+    },
+    {
+      tabName: 'Test Institution Configuration API',
+      apiUrl: 'https://2',
+      slug: 'config',
+      editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
     },
     // {
     //   tabName: 'Sample Test 3',
@@ -51,62 +69,37 @@ export class TestPartnerAPIComponent implements OnInit {
     // },
   ];
 
-  exampleResponse = {
-    error: false,
-    message: '3 Categor(ies) Available',
-    data: [
-      {
-        id: 1,
-        created_by: 1,
-        name: 'Electronics',
-        slug: 'electronics',
-        short_description: null,
-        file_path: null,
-        is_active: 1,
-        status: 'Active',
-        created_at: '2023-08-20T10:36:34.000000Z',
-        updated_at: '2023-08-20T10:36:34.000000Z',
-      },
-      {
-        id: 2,
-        created_by: 1,
-        name: 'Food',
-        slug: 'food',
-        short_description: null,
-        file_path: null,
-        is_active: 1,
-        status: 'Active',
-        created_at: '2023-08-20T10:37:04.000000Z',
-        updated_at: '2023-08-20T10:37:04.000000Z',
-      },
-      {
-        id: 3,
-        created_by: 1,
-        name: 'Foooddd',
-        slug: 'foooddd',
-        short_description: null,
-        file_path: 'http://localhost:2020/category/category_food1.png',
-        is_active: 0,
-        status: 'Inactive',
-        created_at: '2023-08-20T10:39:41.000000Z',
-        updated_at: '2023-08-20T10:59:27.000000Z',
-      },
-    ],
-  };
+ 
 
+readOnly = false;
   activeTab: any;
 
   requestBtn: boolean = false;
   status: Status = Status.NORMAL;
-  constructor(private fb: FormBuilder, private matDialog: MatDialog) {}
+  user: any;
+  encryptionData: any;
+  endpointPayload: any;
+  code = ''
+  institutionConfigData: any;
+  encryptedData= '';
+  showEncryptedData = false;
+  constructor(
+    private fb: FormBuilder, 
+    private matDialog: MatDialog,
+    private store: Store,
+    private actions$: Actions,
+    private appStore: Store<AppStateInterface>,
+    private service: InstitutionService
+    ) {}
 
   ngOnInit(): void {
     this.activeTab = this.mockData[0]; //this should be set on api call not oninit
-    this.encrypTionForm = this.fb.group({
-      ivKey: ['', Validators.required],
-      secretKey: ['', Validators.required]
-    })
+    const data: any = localStorage.getItem('authData');
+    this.user = JSON.parse(data);
+    this.getEncyptionResponse()
   }
+
+
 
   partnerApi() {
     this.requestBtn = true;
@@ -114,39 +107,107 @@ export class TestPartnerAPIComponent implements OnInit {
 
   selectTab(i: number) {
     this.activeTab = this.mockData[i];
-  }
+    if (this.activeTab.slug === 'encrypt')  {
+      this.getEncyptionResponse()
+    } else if (this.activeTab.slug === 'decrypt') {
+      this.getEncyptionResponse()
+    } else {
+      this.institutionConfigResponse()
 
-  requestUrl() {
-    const openDialog = this.matDialog.open(ConfirmSuccessModalComponent, {
-      data: {
-        image: 'assets/images/question.png',
-        title: 'Request Live URL to Migrate Data',
-        content:
-          'By requesting a live URL, you certify that you have successfully tested our sample API endpoints. Would you like to continue to make this request?',
-        acceptText: 'Yes, Request Live URL',
-        cancelText: 'Go back',
-      },
-    });
-    openDialog.afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        // Call a function when the "Accept" button is clicked
-        this.confirmRequestUrl();
-      } else {
-        // Handle the "Cancel" action or do nothing
+    }
+  }
+  getEncyptionResponse() {
+    this.store.dispatch(
+      getEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+      if (res.payload.payload !== null) {
+        this.encryptionData = res.payload.payload
       }
-    });
+    })
+   
+  }
+  getDecyptionResponse() {
+    this.store.dispatch(
+      getEncryptionAndDecryption({
+        id: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+      if (res.payload.payload !== null) {
+        this.encryptionData = res.payload.payload
+      }
+    })
+   
+  }
+  institutionConfigResponse() {
+    this.store.dispatch(
+      callInstitutionConfigurationAPI({
+        InstitutionId: this.user.user?.institutionId,
+      })
+    );
+    this.actions$.pipe(ofType(callInstitutionConfigurationAPISuccess)).subscribe((res: any) => {
+      if (res.payload !== null) {
+        this.institutionConfigData = `${JSON.stringify(res.payload, null, '\t')}`;
+      }
+    })
+   
   }
 
-  confirmRequestUrl() {
-    // call endpoint here
-    const openDialog = this.matDialog.open(SuccessModalComponent, {
-      data: {
-        image: 'assets/images/question.png',
-        title: 'Success',
-        content:
-          'The requested live URL has been successfully sent to your registered email address.',
-        okayText: 'Okay',
-      },
-    });
+
+
+  codePayload(event: any) {
+    this.endpointPayload = JSON.parse(event);
+    
+  }
+
+  testEncryption() {
+    const params = {
+
+      ivKey: this.encryptionData.ivKey,
+      secretKey: this.encryptionData.secretKey,
+    }
+    const payload = this.endpointPayload
+    console.log(payload)
+    
+    this.store.dispatch(encryptData({params, payload}))
+    this.actions$.pipe(ofType(encryptDataSuccess)).subscribe((res: any) => {
+      console.log(res)
+      this.encryptedData = res.payload;
+      this.showEncryptedData = true;
+
+    })
+  }
+  decryptEncryptedData() {
+    const params = {
+
+      ivKey: this.encryptionData.ivKey,
+      secretKey: this.encryptionData.secretKey,
+      data: this.encryptedData
+    }
+    const payload = {
+     
+    }
+    this.store.dispatch(decryptData({params, payload}))
+    this.actions$.pipe(ofType(decryptDataSuccess)).subscribe((res: any) => {
+      this.code = `${JSON.stringify(res.payload, null, '\t')}`;
+
+    })
+  }
+
+  testAPI() {
+    const params = {
+
+      InstitutionId: 24,
+    }
+    const payload = this.endpointPayload
+    this.store.dispatch(callInstitutionRecordAPI({params, payload}))
+    this.actions$.pipe(ofType(callInstitutionRecordAPISuccess)).subscribe((res: any) => {
+      console.log(res)
+      this.code = `${JSON.stringify(res.payload, null, '\t')}`;
+      this.readOnly = true;
+    })
   }
 }

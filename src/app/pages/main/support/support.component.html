@@ -23,7 +23,7 @@
               [placeholder]="'Enter email address'"
               [control]="$any(support.get('email'))"
               [errorMessage]="'Email is Required'"
-              [required]="true"
+              [readonly]="true"
             >
             </app-app-text-input>
           </div>
@@ -40,7 +40,7 @@
               [placeholder]="'Enter First Name'"
               [control]="$any(support.get('firstName'))"
               [errorMessage]="'First Name is Required'"
-              [required]="true"
+              [readonly]="true"
             >
             </app-app-text-input>
           </div>
@@ -57,7 +57,7 @@
               [placeholder]="'Enter Last Name'"
               [control]="$any(support.get('lastName'))"
               [errorMessage]="'Last Name is Required'"
-              [required]="true"
+              [readonly]="true"
             >
             </app-app-text-input>
           </div>
@@ -118,7 +118,6 @@
         <div class="mt-6">
           <app-app-button
             [overRideButtonClass]="true"
-            [disabled]="support.invalid || status === 'LOADING'"
             [status]="status"
             (buttonClick)="saveSupport()"
             [customClass]="

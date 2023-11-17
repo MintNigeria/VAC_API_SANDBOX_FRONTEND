@@ -7,7 +7,7 @@ import { NotificationsService } from 'src/app/core/services/shared/notifications
 import { StorageService } from 'src/app/core/services/shared/storage.service';
 import { AppResponseInterface } from 'src/app/types/appState.interface';
 import { setAPIResponseMessage } from '../shared/app.action';
-import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, invokeSupport, invokeSupportSuccess, updatePartnerAPI, updatePartnerAPISuccess } from './action';
+import { callInstitutionConfigurationAPI, callInstitutionConfigurationAPISuccess, callInstitutionRecordAPI, callInstitutionRecordAPISuccess, createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, decryptData, decryptDataSuccess, encryptData, encryptDataSuccess, getAllInstitutionsDropdown, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess, invokeSupport, invokeSupportSuccess } from './action';
 import { UploadsService } from 'src/app/core/services/uploads/uploads.service';
 
 
@@ -89,8 +89,8 @@ export class InstitutionEffects {
                 })
               );
               // read data and update payload
-              return getAllInstitutionsDropdownSuccess({
-                payload: data.payload
+              return getEncryptionAndDecryptionSuccess({
+                payload: data
                   
               });
             })
@@ -136,9 +136,9 @@ export class InstitutionEffects {
     );
   });
 
-  updatePartnerAPI$ = createEffect(() => {
+  getPartnerAPI$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(updatePartnerAPI),
+      ofType(getPartnerAPI),
       switchMap((action) => {
         this.appStore.dispatch(
           setAPIResponseMessage({
@@ -163,8 +163,8 @@ export class InstitutionEffects {
                 })
               );
               // read data and update payload
-              return updatePartnerAPISuccess({
-                payload: data.payload
+              return getPartnerAPISuccess({
+                payload: data
                   
               });
             })
@@ -210,6 +210,153 @@ export class InstitutionEffects {
     );
   });
 
+  encryptData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(encryptData),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {params, payload } = action;
+        return this.institutionService.encryptData(params, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return encryptDataSuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
+  decryptData$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(decryptData),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {params, payload } = action;
+        return this.institutionService.decryptData(params, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return decryptDataSuccess({
+              payload: data
+            });
+          })
+        );
+      })
+    );
+  });
+
+  callInstitutionRecordAPI$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(callInstitutionRecordAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        const {params, payload } = action;
+        return this.institutionService.callInstitutionRecordAPI(params, payload).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return callInstitutionRecordAPISuccess({
+              payload: data
+            });
+          })
+        );
+      })
+    );
+  });
+
+  callInstitutionconfigurationAPI$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(callInstitutionConfigurationAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIResponseMessage({
+            apiResponseMessage: {
+              apiResponseMessage: '',
+              isLoading: true,
+              isApiSuccessful: false,
+            },
+          })
+        );
+      
+        return this.institutionService.callInstitutionConfigurationAPI(action.InstitutionId).pipe(
+          map((data: any) => {
+            this.appStore.dispatch(
+              setAPIResponseMessage({
+                apiResponseMessage: {
+                  apiResponseMessage: '',
+                  isLoading: false,
+                  isApiSuccessful: true,
+                },
+              })
+            );
+
+            // read data and update payload
+            return callInstitutionConfigurationAPISuccess({
+              payload: data.payload
+            });
+          })
+        );
+      })
+    );
+  });
+
   support$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(invokeSupport),
@@ -239,7 +386,7 @@ export class InstitutionEffects {
 
             // read data and update payload
             return invokeSupportSuccess({
-              payload: data.payload
+              payload: data.description
             });
           })
         );

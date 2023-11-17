@@ -1,4 +1,4 @@
-<div class="h-1/2 w-full border">
-    <ngx-monaco-editor style="height: 500px" [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
-
+<div class=" w-full border">
+    <ngx-monaco-editor style="height: 300px" [options]="editorOptions" [(ngModel)]="code" (onInit)="onInit($event)" ></ngx-monaco-editor>
+    <!-- <ngx-monaco-diff-editor [options]="editorOptions" [originalModel]="code" [modifiedModel]="code"></ngx-monaco-diff-editor> -->
 </div>

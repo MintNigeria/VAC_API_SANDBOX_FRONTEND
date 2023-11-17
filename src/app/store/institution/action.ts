@@ -30,14 +30,14 @@ export const createEncryptionAndDecryptionSuccess = createAction(
   props<{payload: any}>()
 );
 
-export const updatePartnerAPI = createAction(
-  '[update partner api] update partner API',
+export const getPartnerAPI = createAction(
+  '[get partner api] get partner API',
   props<{id: any}>()
 
 );
 
-export const updatePartnerAPISuccess = createAction(
-  '[update partner api] integrate partner API success',
+export const getPartnerAPISuccess = createAction(
+  '[get partner api] integrate partner API success',
   props<{payload: any}>()
 )
 
@@ -49,6 +49,47 @@ export const createPartnerAPI = createAction(
 
 export const createPartnerAPISuccess = createAction(
   '[update partner api] integrate partner API success',
+  props<{payload: any}>()
+)
+
+export const encryptData = createAction(
+  '[encrypt data] encrypt data',
+  props<{params: any, payload: any}>()
+
+);
+
+export const encryptDataSuccess = createAction(
+  '[encrypt data] encrypt data success',
+  props<{payload: any}>()
+)
+export const decryptData = createAction(
+  '[decrypt data] decrypt data',
+  props<{params: any, payload: any}>()
+
+);
+
+export const decryptDataSuccess = createAction(
+  '[decrypt data] decrypt data success',
+  props<{payload: any}>()
+)
+export const callInstitutionRecordAPI = createAction(
+  '[test api] test api',
+  props<{params: any, payload: any}>()
+
+);
+
+export const callInstitutionRecordAPISuccess = createAction(
+  '[test api] test api response',
+  props<{payload: any}>()
+)
+export const callInstitutionConfigurationAPI = createAction(
+  '[test configuration api ] test configuration api ',
+  props<{InstitutionId: any}>()
+
+);
+
+export const callInstitutionConfigurationAPISuccess = createAction(
+  '[test configuration api ] test configuration api  response',
   props<{payload: any}>()
 )
 

@@ -13,12 +13,15 @@ import { ConfirmSuccessModalComponent } from '../../modals/confirm-success-modal
 })
 export class AppHeaderComponent implements OnInit {
   showAccount : boolean = false
+  user: any;
   constructor(
     private matDialog: MatDialog,
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    const data: any = localStorage.getItem('authData');
+    this.user = JSON.parse(data);
   }
   logOut(){
     this.matDialog.open(ConfirmSuccessModalComponent, {

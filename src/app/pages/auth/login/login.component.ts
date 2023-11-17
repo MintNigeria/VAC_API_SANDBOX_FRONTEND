@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Actions, ofType } from '@ngrx/effects';
@@ -10,6 +11,7 @@ import {
   EnterFromTop,
 } from 'src/app/animations/animations';
 import { NotificationsService } from 'src/app/core/services/shared/notifications.service';
+import { SingleSessionModalComponent } from 'src/app/shared/components/single-session-modal/single-session-modal.component';
 import { invokeLoginUser, loginSuccess, logoutAction } from 'src/app/store/auth/action';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
     private appStore: Store<AppStateInterface>,
     private actions$: Actions,
     private notificationService: NotificationsService,
+    private dialog: MatDialog,
     ) { }
 
   ngOnInit(): void {
@@ -91,8 +94,21 @@ export class LoginComponent implements OnInit {
           this.notificationService.publishMessages('error', 'Invalid login credential');
           // localStorage.clear()
         }
+      } else if (res.accessToken === undefined && res.hasErrors === true && res.errors[0] === 'You have an active session!!!') {
+        this.launchSingleLoginModal(this.loginAuth.value)
+
       }
 
     })
+  }
+
+
+  launchSingleLoginModal(data: any) {
+    const dialogRef = this.dialog.open(SingleSessionModalComponent, {
+      // width: '600px',
+      // height: '600px'
+      data,
+      disableClose: true 
+    });
   }
 }

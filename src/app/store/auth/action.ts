@@ -62,7 +62,7 @@ export const requestPasswordResetSuccess = createAction(
 
 export const resendOTP = createAction(
   '[resendOTP] Resend OTP',
-  props<{ email: string }>()
+  props<{ email: any }>()
 );
 
 export const resendOTPSuccess = createAction(
@@ -116,15 +116,16 @@ export const activateDeactivate2FASuccess = createAction(
   props<{ message: string }>()
 );
 
-export const confirm2FAction = createAction(
-  '[confirm2FAction] confirm 2FA action',
-  props<{ email: any }>()
+export const emailVerification = createAction(
+  '[emailVerification] confirm emailVerification',
+  props<{ payload: any }>()
 );
 
-export const confirm2FActionSuccess = createAction(
-  '[confirm2FAction] confirm 2FA action Success',
+export const emailVerificationSuccess = createAction(
+  '[emailVerification] confirm emailVerification Success',
   props<{ message: string }>()
 );
+
 
 export const LOGOUT = '[App] Logout';
 export const logoutAction = createAction('[App] Logout');

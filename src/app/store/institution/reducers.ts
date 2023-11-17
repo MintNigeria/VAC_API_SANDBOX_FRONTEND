@@ -2,11 +2,17 @@ import { Action, ActionReducer, createReducer, on } from '@ngrx/store';
 import { IInstitutionStateInterface } from './types/index.type';
 
 import * as storage from '../storage';
-import { createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, invokeSupportSuccess, updatePartnerAPISuccess } from './action';
+import { callInstitutionConfigurationAPISuccess, callInstitutionRecordAPISuccess, createEncryptionAndDecryptionSuccess, createPartnerAPISuccess, decryptDataSuccess, encryptDataSuccess, getAllInstitutionsDropdownSuccess, getEncryptionAndDecryptionSuccess, getPartnerAPISuccess, invokeSupportSuccess } from './action';
 
 const initialState: IInstitutionStateInterface = {
   dropdown: null,
-  encryptionData: null
+  encryptionData: null,
+  partnerAPIdata: null,
+  encryptData: null,
+  decryptData: null,
+  apiData: null,
+  configData: null,
+  support: null,
 };
 
 export const institutionReducers = createReducer(
@@ -20,7 +26,7 @@ export const institutionReducers = createReducer(
   on(getEncryptionAndDecryptionSuccess, (state, { payload }) => {
     return {
       ...state,
-      dropdown : payload
+      encryptionData : payload
     };
   }),
   on(createEncryptionAndDecryptionSuccess, (state, { payload }) => {
@@ -29,10 +35,10 @@ export const institutionReducers = createReducer(
       dropdown : payload
     };
   }),
-  on(updatePartnerAPISuccess, (state, { payload }) => {
+  on(getPartnerAPISuccess, (state, { payload }) => {
     return {
       ...state,
-      dropdown : payload
+      partnerAPIdata : payload
     };
   }),
   on(createPartnerAPISuccess, (state, { payload }) => {
@@ -41,12 +47,35 @@ export const institutionReducers = createReducer(
       dropdown : payload
     };
   }),
+  on(encryptDataSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      encryptData : payload
+    };
+  }),
+  on(decryptDataSuccess, (state, { payload }) => {
+    return {
+      ...state,
+      decryptData : payload
+    };
+  }),
+  on(callInstitutionRecordAPISuccess, (state, { payload }) => {
+    return {
+      ...state,
+      apiData : payload
+    };
+  }),
+  on(callInstitutionConfigurationAPISuccess, (state, { payload }) => {
+    return {
+      ...state,
+      configData : payload
+    };
+  }),
   on(invokeSupportSuccess, (state, { payload }) => {
     return {
       ...state,
-      dropdown : payload
+      support : payload
     };
   }),
-  
   
 );
