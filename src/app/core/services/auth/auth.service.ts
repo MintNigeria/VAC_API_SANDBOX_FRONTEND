@@ -100,8 +100,10 @@ export class AuthService extends BaseURI implements AbstractAuthService {
   }
 
   resendOTP(email: string) {
+    const body = new FormData()
+    body.append('email', email)
     return this.http.post<any>(
-      `${this.baseUrl2}mint-auth/api/v1/Authentication/SendTwoFactorCode/${email}`, {}
+      `${this.baseUrl2}mint-auth/api/v1/Authentication/RequestEmailVerification`, body
     );
   }
 

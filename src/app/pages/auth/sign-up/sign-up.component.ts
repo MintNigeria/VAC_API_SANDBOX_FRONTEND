@@ -75,7 +75,7 @@ export class SignUpComponent implements OnInit {
     const payload = {
       lastName,
       firstName,
-      phoneNumber: String(phoneNumber),
+      // phoneNumber: String(phoneNumber),
       email,
       password,
       institutionId,

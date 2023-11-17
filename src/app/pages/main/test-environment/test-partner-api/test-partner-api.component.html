@@ -78,7 +78,7 @@
   
     </div>
     <div class="my-11">
-      <app-editor [code]="code"  [editorOptions]="activeTab.editorOptions" (editorPayload)="codePayload($event)"></app-editor>
+      <app-editor [code]="recordQueryResponse"  [editorOptions]="activeTab.editorOptions" (editorPayload)="codePayload($event)"></app-editor>
     </div>
     <div>
       <app-app-button [overRideButtonClass]="true"

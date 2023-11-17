@@ -12,6 +12,7 @@ import { SuccessModalComponent } from 'src/app/shared/modals/success-modal/succe
 import { callInstitutionConfigurationAPI, callInstitutionConfigurationAPISuccess, callInstitutionRecordAPI, callInstitutionRecordAPISuccess, decryptData, decryptDataSuccess, encryptData, encryptDataSuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess } from 'src/app/store/institution/action';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
+import { NotificationsService } from 'src/app/core/services/shared/notifications.service';
 
 export interface CodeModel {
   language: string;
@@ -33,13 +34,13 @@ export class TestPartnerAPIComponent implements OnInit {
   encrypTionForm!: FormGroup
   mockData = [
     {
-      tabName: 'Test Encyrption ',
+      tabName: 'Test Encryption ',
       apiUrl: 'https://1',
       slug: 'encrypt',
       editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: false}
     },
     {
-      tabName: 'Test Decrytion',
+      tabName: 'Test Decryption',
       apiUrl: '',
       slug: 'decrypt',
       editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
@@ -80,6 +81,7 @@ readOnly = false;
   encryptionData: any;
   endpointPayload: any;
   code = ''
+  recordQueryResponse = ''
   institutionConfigData: any;
   encryptedData= '';
   showEncryptedData = false;
@@ -89,7 +91,9 @@ readOnly = false;
     private store: Store,
     private actions$: Actions,
     private appStore: Store<AppStateInterface>,
-    private service: InstitutionService
+    private service: InstitutionService,
+    private notificationService: NotificationsService,
+
     ) {}
 
   ngOnInit(): void {
@@ -111,9 +115,10 @@ readOnly = false;
       this.getEncyptionResponse()
     } else if (this.activeTab.slug === 'decrypt') {
       this.getEncyptionResponse()
+    } else if (this.activeTab.slug === 'record') {
+      // this.institutionConfigResponse()
     } else {
       this.institutionConfigResponse()
-
     }
   }
   getEncyptionResponse() {
@@ -156,8 +161,6 @@ readOnly = false;
    
   }
 
-
-
   codePayload(event: any) {
     this.endpointPayload = JSON.parse(event);
     
@@ -170,13 +173,12 @@ readOnly = false;
       secretKey: this.encryptionData.secretKey,
     }
     const payload = this.endpointPayload
-    console.log(payload)
     
     this.store.dispatch(encryptData({params, payload}))
     this.actions$.pipe(ofType(encryptDataSuccess)).subscribe((res: any) => {
-      console.log(res)
-      this.encryptedData = res.payload;
+      this.encryptedData = res.payload.payload;
       this.showEncryptedData = true;
+      this.notificationService.publishMessages('success', res.payload.description);
 
     })
   }
@@ -192,6 +194,8 @@ readOnly = false;
     }
     this.store.dispatch(decryptData({params, payload}))
     this.actions$.pipe(ofType(decryptDataSuccess)).subscribe((res: any) => {
+      this.notificationService.publishMessages('success', res.payload.description);
+
       this.code = `${JSON.stringify(res.payload, null, '\t')}`;
 
     })
@@ -206,7 +210,7 @@ readOnly = false;
     this.store.dispatch(callInstitutionRecordAPI({params, payload}))
     this.actions$.pipe(ofType(callInstitutionRecordAPISuccess)).subscribe((res: any) => {
       console.log(res)
-      this.code = `${JSON.stringify(res.payload, null, '\t')}`;
+      this.recordQueryResponse = `${JSON.stringify(res.payload, null, '\t')}`;
       this.readOnly = true;
     })
   }

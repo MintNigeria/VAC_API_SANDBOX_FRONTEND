@@ -67,14 +67,16 @@ export class NewPasswordComponent implements OnInit {
      const email = sessionStorage.getItem('email')
 
     const payload = {
-      userName: 'demotestuser@yopmail.com',
+      userName: email,
       code: this.otpValue
     }
     
     this.store.dispatch(emailVerification({payload}))
     this.actions$.pipe(ofType(emailVerificationSuccess)).subscribe((res: any) => {
-      if (res.payload.hasErrors === false) {
+      console.log(res)
+      if (res.message.hasErrors === false) {
         // this.showOTPPage = true;
+        this.notificationService.publishMessages('success', res.message.description);
 
         this.router.navigateByUrl('/')
       }
@@ -116,7 +118,7 @@ export class NewPasswordComponent implements OnInit {
   resendOTP() {
     const userEmail = sessionStorage.getItem('email')
 
-    this.store.dispatch(resendOTP({email: 'demotestuser@yopmail.com'}))
+    this.store.dispatch(resendOTP({email: userEmail}))
     this.actions$.pipe(ofType(resendOTPSuccess)).subscribe((res: any) => {
       if (res.message.hasErrors === false) {
         this.notificationService.publishMessages('success', res.message.description);

@@ -5,10 +5,11 @@ import { Actions, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { InstitutionService } from 'src/app/core/services/institution/institution.service';
 import { TestEnvironmentService } from 'src/app/core/services/test-environment/test-environment.service';
-import { createEncryptionAndDecryption, createPartnerAPI, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from 'src/app/store/institution/action';
+import { createEncryptionAndDecryption, createEncryptionAndDecryptionSuccess, createPartnerAPI, createPartnerAPISuccess, getEncryptionAndDecryption, getEncryptionAndDecryptionSuccess, getPartnerAPI, getPartnerAPISuccess } from 'src/app/store/institution/action';
 import { securitySelector } from 'src/app/store/security-setup/selector';
 import { AppStateInterface } from 'src/app/types/appState.interface';
 import { Status } from 'src/app/types/shared.types';
+import { NotificationsService } from 'src/app/core/services/shared/notifications.service';
 
 @Component({
   selector: 'app-api-configuratiosn',
@@ -23,7 +24,7 @@ export class ApiConfiguratiosnComponent implements OnInit {
   integrateAPIForm!: FormGroup;
   mockData = [
     {
-      tabName: 'Setup Encyrption & Decryption ',
+      tabName: 'Setup Encryption & Decryption ',
       type: 'encryption',
       apiUrl: 'https://1',
     },
@@ -44,7 +45,9 @@ export class ApiConfiguratiosnComponent implements OnInit {
     private store: Store,
     private actions$: Actions,
     private appStore: Store<AppStateInterface>,
-    private service: InstitutionService
+    private service: InstitutionService,
+    private notificationService: NotificationsService,
+
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +94,6 @@ export class ApiConfiguratiosnComponent implements OnInit {
       })
     );
     this.actions$.pipe(ofType(getEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
-      console.log(res)
       if (res.payload.payload !== null) {
         this.btnText = 'Update Setup'
         this.encrypTionForm.patchValue({
@@ -131,26 +133,45 @@ export class ApiConfiguratiosnComponent implements OnInit {
 
   createEncryptionDecryptionData() {
     const {institutionId, institutionName, secretKey, ivKey, id } = this.encrypTionForm.value;
-    const payload = {
-      institutionId: Number(this.user.user?.institutionId),
-      institutionName,
-      secretKey,
-      ivKey
-    }
+   
     if (this.btnText === 'Save Setup') {
+      const payload = {
+        // institutionId: Number(this.user.user?.institutionId),
+        institutionName,
+        secretKey,
+        ivKey
+      }
       this.store.dispatch(createEncryptionAndDecryption({
         id: this.user.user?.institutionId,
         payload
         
       }));
-      this.getEncyptionResponse()
+      this.actions$.pipe(ofType(createEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+        if (res) {
+          this.notificationService.publishMessages('success', res.payload.description);
+
+          this.getEncyptionResponse()
+        }
+      })
     } else {
+      const payload = {
+        institutionId: Number(this.user.user?.institutionId),
+        institutionName,
+        secretKey,
+        ivKey
+      }
       this.store.dispatch(createEncryptionAndDecryption({
         id: this.user.user?.institutionId,
         payload: {...payload, id },
         
       }));
-      this.getEncyptionResponse()
+      this.actions$.pipe(ofType(createEncryptionAndDecryptionSuccess)).subscribe((res: any) => {
+        if (res) {
+          this.notificationService.publishMessages('success', res.payload.description);
+
+          this.getEncyptionResponse()
+        }
+      })
 
     }
   }
@@ -167,13 +188,25 @@ export class ApiConfiguratiosnComponent implements OnInit {
       id: this.user.user?.institutionId,
       payload,   
     }));
-    this.getConfigResponse()
+    this.actions$.pipe(ofType(createPartnerAPISuccess)).subscribe((res: any) => {
+      if (res.payload.hasErrors === false) {
+                  this.notificationService.publishMessages('success', res.payload.description);
+
+        this.getConfigResponse()
+      }
+    })
   } else {
     this.store.dispatch(createPartnerAPI({
       id: this.user.user?.institutionId,
       payload: {...payload, id},   
     }));
-    this.getConfigResponse()
+    this.actions$.pipe(ofType(createPartnerAPISuccess)).subscribe((res: any) => {
+      if (res.payload.hasErrors === false) {
+        this.notificationService.publishMessages('success', res.payload.description);
+
+      this.getConfigResponse()
+      }
+    })
 
     }
   }
