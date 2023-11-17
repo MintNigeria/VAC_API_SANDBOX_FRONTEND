@@ -128,7 +128,7 @@ export class InstitutionEffects {
 
             // read data and update payload
             return createEncryptionAndDecryptionSuccess({
-              payload: data.payload
+              payload: data
             });
           })
         );
@@ -202,7 +202,7 @@ export class InstitutionEffects {
 
             // read data and update payload
             return createPartnerAPISuccess({
-              payload: data.payload
+              payload: data
             });
           })
         );
@@ -239,7 +239,7 @@ export class InstitutionEffects {
 
             // read data and update payload
             return encryptDataSuccess({
-              payload: data.payload
+              payload: data
             });
           })
         );
