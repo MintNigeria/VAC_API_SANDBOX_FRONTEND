@@ -34,7 +34,7 @@
       'btn bg-[#4086EF] hover:bg-[#1059C6] capitalize w-fit outline-0 border-0 py-3 rounded-lg px-6 md:text-sm text-white'
     " [buttonText]="'Encrypt'"></app-app-button>
     </div>
-    <div class="mt-3" *ngIf="showEncryptedData === true"> {{showEncryptedData}}
+    <div class="mt-3" *ngIf="showEncryptedData === true"> 
 
       <textarea name="" [value]="encryptedData" class="p-3 bg-white h-40 rounded w-full" readonly id="" ></textarea>
       <p class="text-red-500 text-sm mb-4">Please copy this encrypted data if you wish to decrypt it.</p>

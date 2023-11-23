@@ -46,12 +46,12 @@ export class TestPartnerAPIComponent implements OnInit {
       editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
     },
     {
-      tabName: 'Test Institution record API',
+      tabName: 'Test Institution record structure',
       apiUrl: 'https://2',
       slug: 'record'
     },
     {
-      tabName: 'Test Institution Configuration API',
+      tabName: 'View Institution Configuration strucuture',
       apiUrl: 'https://2',
       slug: 'config',
       editorOptions: {theme: 'vs-white', minimap: { enabled: false }, automaticLayout: true , language: 'typescript', readOnly: true}
